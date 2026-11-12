@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>The Boss — Ortho Mastery</title>
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800,900|space-grotesk:500,600,700" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0e1a;--bg2:#111827;--card:#1a2030;--text:#e5e7eb;--muted:#9ca3af;--border:#2a3344;--ok:#10b981;--okbg:rgba(16,185,129,.12);--err:#ef4444;--errbg:rgba(239,68,68,.12);--acc:#3b82f6}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1200px 600px at 10% -10%,rgba(59,130,246,.08),transparent 60%),radial-gradient(1000px 500px at 110% 10%,rgba(139,92,246,.08),transparent 60%),var(--bg)}
+.app{max-width:1200px;margin:0 auto;padding:16px;padding-bottom:100px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 4px;margin-bottom:18px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(10,14,26,.95),rgba(10,14,26,.7) 80%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.brand-mark{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#000;box-shadow:0 8px 24px rgba(251,191,36,.35);font-size:14px;letter-spacing:-.02em}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em}
+.brand-sub{font-size:10.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.icon-btn{width:42px;height:42px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text);display:grid;place-items:center;cursor:pointer;transition:transform .15s,background .2s}
+.icon-btn:active{transform:scale(.95)}
+.icon-btn:hover{background:#222b3d}
+.hero{padding:22px 6px 18px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,6vw,38px);line-height:1.1;letter-spacing:-.03em;font-weight:700;margin-bottom:8px}
+.hero h1 span{background:linear-gradient(135deg,#fbbf24,#f59e0b,#fb923c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:14px;max-width:560px;line-height:1.55}
+.boss-badge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;padding:6px 14px;border-radius:999px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(251,191,36,.3);margin-bottom:12px}
+.boss-badge::before{content:'👑';font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px}
+.stat-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.stat-value{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700}
+.section-title{display:flex;align-items:baseline;justify-content:space-between;margin:6px 4px 14px}
+.section-title h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-.02em}
+.section-title small{color:var(--muted);font-size:12px}
+.chapters{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.chapters{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:980px){.chapters{grid-template-columns:repeat(3,1fr)}}
+.chapter-card{position:relative;border-radius:18px;padding:18px;min-height:170px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid rgba(255,255,255,.08);color:#fff;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}
+.chapter-card:active{transform:scale(.98)}
+.chapter-card:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.chapter-card::before{content:'';position:absolute;inset:0;background:radial-gradient(600px 200px at 100% 0%,rgba(255,255,255,.18),transparent 60%);pointer-events:none}
+.chapter-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.35));pointer-events:none;z-index:0}
+.chapter-card>*{position:relative;z-index:1}
+.ch-num{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.85;font-weight:600}
+.ch-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;line-height:1.2;margin-top:6px;letter-spacing:-.01em}
+.ch-meta{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:12px}
+.ch-progress{flex:1;height:6px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;margin-right:10px}
+.ch-progress>div{height:100%;background:#fff;border-radius:999px;transition:width .3s}
+.ch-badge{background:rgba(0,0,0,.35);padding:4px 8px;border-radius:999px;font-weight:600;font-size:11px;backdrop-filter:blur(6px)}
+.ch-done{position:absolute;top:12px;right:12px;background:rgba(16,185,129,.9);color:#fff;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.05em;z-index:2}
+.quiz-screen{display:none}
+.quiz-screen.active{display:block}
+.home-screen.hidden{display:none}
+.quiz-header{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px;margin-bottom:14px}
+.quiz-top-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.back-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.quiz-chapter-info{flex:1;min-width:0}
+.quiz-chapter-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quiz-chapter-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.quiz-stats{display:flex;gap:8px;font-size:12px}
+.quiz-stat{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:6px}
+.quiz-stat .dot{width:8px;height:8px;border-radius:50%}
+.dot-ok{background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.dot-err{background:var(--err);box-shadow:0 0 10px var(--err)}
+.dot-rem{background:#60a5fa}
+.progress-bar{height:6px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:10px}
+.progress-bar>div{height:100%;background:linear-gradient(90deg,var(--acc),#a78bfa);transition:width .35s;border-radius:999px}
+.q-nav{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 10px;margin-bottom:10px;scrollbar-width:none}
+.q-nav::-webkit-scrollbar{display:none}
+.q-dot{min-width:32px;height:32px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:600;display:grid;place-items:center;cursor:pointer;flex-shrink:0;transition:all .15s}
+.q-dot.current{background:var(--acc);color:#fff;border-color:var(--acc);box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+.q-dot.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.q-dot.err{background:var(--err);color:#fff;border-color:var(--err)}
+.question-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px 18px;margin-bottom:14px}
+.q-label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.q-label .q-num{background:var(--acc);color:#fff;padding:3px 9px;border-radius:999px;font-weight:700;letter-spacing:0}
+.q-text{font-size:16px;line-height:1.55;font-weight:500;color:#f3f4f6;margin-bottom:18px;word-wrap:break-word}
+@media(min-width:640px){.q-text{font-size:17px}}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:14px;padding:14px 14px 14px 46px;cursor:pointer;position:relative;transition:all .15s;font-size:14.5px;line-height:1.5;color:#e5e7eb;text-align:left;width:100%;font-family:inherit}
+.option::before{content:attr(data-letter);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);display:grid;place-items:center;font-weight:700;font-size:12px;color:var(--muted)}
+.option:hover:not(.disabled){border-color:var(--acc);background:rgba(59,130,246,.08)}
+.option.ok{border-color:var(--ok);background:var(--okbg);color:#d1fae5}
+.option.ok::before{background:var(--ok);color:#fff;border-color:var(--ok)}
+.option.err{border-color:var(--err);background:var(--errbg);color:#fee2e2}
+.option.err::before{background:var(--err);color:#fff;border-color:var(--err)}
+.option.disabled{cursor:default}
+.feedback{margin-top:14px;padding:14px;border-radius:14px;border:1px solid var(--border);display:none;animation:slideUp .3s}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.feedback.show{display:block}
+.feedback.ok-fb{background:var(--okbg);border-color:rgba(16,185,129,.35)}
+.feedback.err-fb{background:var(--errbg);border-color:rgba(239,68,68,.35)}
+.fb-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.fb-title .emoji{font-size:18px}
+.fb-text{font-size:13.5px;line-height:1.55;color:#d1d5db}
+.fb-text strong{color:#fff}
+.motivation{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;box-shadow:0 12px 30px rgba(251,191,36,.4);opacity:0;pointer-events:none;transition:all .35s;z-index:100;max-width:90vw;text-align:center}
+.motivation.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(17,24,39,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:40}
+.nav-btn{flex:1;padding:14px;border-radius:12px;font-weight:600;font-size:14px;border:none;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed}
+.nav-btn.prev{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.nav-btn.next{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;box-shadow:0 8px 20px rgba(59,130,246,.35)}
+.nav-btn.next:active:not(:disabled){transform:scale(.97)}
+.nav-btn.finish{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 8px 20px rgba(16,185,129,.35)}
+.result-screen{display:none;padding:20px 4px;text-align:center}
+.result-screen.active{display:block}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:28px 20px;margin-bottom:16px}
+.result-icon{width:80px;height:80px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;font-size:40px}
+.result-icon.great{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 10px 30px rgba(16,185,129,.4)}
+.result-icon.good{background:linear-gradient(135deg,#3b82f6,#6366f1);box-shadow:0 10px 30px rgba(59,130,246,.4)}
+.result-icon.ok{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 10px 30px rgba(245,158,11,.4)}
+.result-title{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
+.result-sub{color:var(--muted);font-size:14px;margin-bottom:20px}
+.score-ring{width:160px;height:160px;margin:0 auto 20px;position:relative}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring .ring-bg{stroke:rgba(255,255,255,.08)}
+.score-ring .ring-fg{stroke:url(#scoreGrad);stroke-linecap:round;transition:stroke-dashoffset 1.2s}
+.score-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.score-pct{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;letter-spacing:-.02em}
+.score-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.rs{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:12px 8px}
+.rs-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700}
+.rs-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+.result-actions{display:flex;gap:10px;flex-wrap:wrap}
+.result-actions button{flex:1;min-width:140px;padding:14px;border-radius:12px;font-weight:600;font-size:14px;border:none;cursor:pointer;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;box-shadow:0 8px 20px rgba(59,130,246,.35)}
+.btn-ghost{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
+.history-screen{display:none}
+.history-screen.active{display:block}
+.history-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all .15s}
+.history-item:hover{border-color:var(--acc)}
+.history-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.history-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px}
+.history-score{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;padding:4px 10px;border-radius:999px;flex-shrink:0}
+.history-score.great{background:var(--okbg);color:var(--ok)}
+.history-score.good{background:rgba(59,130,246,.15);color:#60a5fa}
+.history-score.ok{background:rgba(245,158,11,.15);color:#fbbf24}
+.history-score.bad{background:var(--errbg);color:var(--err)}
+.history-meta{display:flex;gap:12px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.wrong-item{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px}
+.wrong-q{font-size:13.5px;line-height:1.5;margin-bottom:8px;color:#e5e7eb}
+.wrong-q b{color:#fff}
+.wrong-answers{display:flex;flex-direction:column;gap:4px;font-size:12.5px}
+.wrong-answers .your{color:#fca5a5}
+.wrong-answers .correct-ans{color:#6ee7b7}
+.wrong-expl{margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);font-size:12.5px;color:var(--muted);line-height:1.5}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state .icon{font-size:48px;margin-bottom:10px;opacity:.5}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 20px;max-width:400px;width:100%;text-align:center}
+.modal h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin-bottom:8px}
+.modal p{color:var(--muted);font-size:14px;margin-bottom:18px;line-height:1.5}
+.modal-actions{display:flex;gap:10px}
+.modal-actions button{flex:1;padding:12px;border-radius:10px;font-weight:600;font-size:14px;border:none;cursor:pointer;font-family:inherit}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .4s}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="topbar">
+<div class="brand" onclick="goHome()">
+<div class="brand-mark">TB</div>
+<div>
+<div class="brand-name">The Boss</div>
+<div class="brand-sub">Ortho Mastery · 300 Questions</div>
+</div>
+</div>
+<button class="icon-btn" onclick="showHistory()" title="History">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+</button>
+</div>
+
+<div id="homeScreen" class="home-screen">
+<div class="hero">
+<div class="boss-badge">THE BOSS PLATFORM</div>
+<h1>Master <span>Orthodontics</span><br/>One Chapter at a Time</h1>
+<p>A premium quiz experience covering 10 chapters and 300 hand-crafted questions. Track your progress, learn from mistakes, and build lasting mastery.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="stat-label">Chapters</div><div class="stat-value" id="statChapters">0/10</div></div>
+<div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value" id="statAccuracy">—</div></div>
+<div class="stat"><div class="stat-label">Streak</div><div class="stat-value" id="statStreak">0 🔥</div></div>
+</div>
+<div class="section-title"><h2>Your Chapters</h2><small id="progressLabel">0% complete</small></div>
+<div class="chapters" id="chaptersGrid"></div>
+</div>
+
+<div id="quizScreen" class="quiz-screen">
+<div class="quiz-header">
+<div class="quiz-top-row">
+<button class="back-btn" onclick="confirmExit()">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+</button>
+<div class="quiz-chapter-info">
+<div class="quiz-chapter-title" id="quizChapterTitle">—</div>
+<div class="quiz-chapter-sub" id="quizChapterSub">Question 1 of 30</div>
+</div>
+</div>
+<div class="quiz-stats">
+<div class="quiz-stat"><span class="dot dot-ok"></span><span id="correctCount">0</span></div>
+<div class="quiz-stat"><span class="dot dot-err"></span><span id="wrongCount">0</span></div>
+<div class="quiz-stat"><span class="dot dot-rem"></span><span id="remainCount">30</span></div>
+</div>
+<div class="progress-bar"><div id="progressFill" style="width:0%"></div></div>
+</div>
+<div class="q-nav" id="qNav"></div>
+<div class="question-card fade-in" id="questionCard">
+<div class="q-label"><span class="q-num" id="qNum">Q1</span><span>Multiple Choice</span></div>
+<div class="q-text" id="qText">—</div>
+<div class="options" id="options"></div>
+<div class="feedback" id="feedback">
+<div class="fb-title"><span class="emoji" id="fbEmoji">✓</span><span id="fbTitle">Correct!</span></div>
+<div class="fb-text" id="fbText">—</div>
+</div>
+</div>
+</div>
+
+<div id="resultScreen" class="result-screen">
+<div class="result-card fade-in">
+<div class="result-icon" id="resultIcon">🏆</div>
+<div class="result-title" id="resultTitle">Chapter Complete!</div>
+<div class="result-sub" id="resultSub">You've finished this chapter</div>
+<div class="score-ring">
+<svg width="160" height="160" viewBox="0 0 160 160">
+<defs><linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient></defs>
+<circle class="ring-bg" cx="80" cy="80" r="70" fill="none" stroke-width="10"/>
+<circle class="ring-fg" id="ringFg" cx="80" cy="80" r="70" fill="none" stroke-width="10" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
+</svg>
+<div class="score-center"><div><div class="score-pct" id="scorePct">0%</div><div class="score-label">Score</div></div></div>
+</div>
+<div class="result-stats">
+<div class="rs"><div class="rs-val" id="rsCorrect" style="color:var(--ok)">0</div><div class="rs-lbl">Correct</div></div>
+<div class="rs"><div class="rs-val" id="rsWrong" style="color:var(--err)">0</div><div class="rs-lbl">Wrong</div></div>
+<div class="rs"><div class="rs-val" id="rsTotal">0/30</div><div class="rs-lbl">Answered</div></div>
+</div>
+</div>
+<div class="result-actions">
+<button class="btn-ghost" onclick="goHome()">Back to Chapters</button>
+<button class="btn-primary" onclick="retryChapter()">Retry Chapter</button>
+</div>
+<div id="resultWrongList" style="margin-top:20px"></div>
+</div>
+
+<div id="historyScreen" class="history-screen">
+<div class="hero">
+<h1>Your <span>Journey</span></h1>
+<p>Review your progress, revisit wrong answers, and track your improvement over time.</p>
+</div>
+<div id="historyContent"></div>
+</div>
+</div>
+
+<div class="bottom-nav" id="bottomNav" style="display:none">
+<button class="nav-btn prev" id="prevBtn" onclick="prevQuestion()">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+Prev
+</button>
+<button class="nav-btn next" id="nextBtn" onclick="nextQuestion()">
+Next
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+</button>
+</div>
+
+<div class="motivation" id="motivation"></div>
+
+<div class="modal-overlay" id="modal">
+<div class="modal">
+<h3 id="modalTitle">Leave Chapter?</h3>
+<p id="modalText">Your progress is saved. You can return anytime.</p>
+<div class="modal-actions">
+<button class="btn-ghost" onclick="closeModal()">Stay</button>
+<button class="btn-primary" id="modalConfirm">Leave</button>
+</div>
+</div>
+</div>
+
+<script>
+/* ============ ALL 10 CHAPTERS × 30 QUESTIONS ============ */
+const CHAPTERS = [
+/* ===== CHAPTER 1 ===== */
+{id:1,title:"Introduction to Orthodontics",theme:{bg:"linear-gradient(135deg,#1e3a5f,#0f2441)",accent:"#3b82f6"},questions:[
+{q:'The term "Orthodontics" is derived from which language?',opts:["Latin","Italian","Greek","French"],a:2,expl:'"Orthodontics" is derived from two Greek words (p.3).'},
+{q:'In the etymology of "Orthodontics," the Greek root "Ortho" means:',opts:["Straight, correct","Tooth, dentition","Jaw, facial bone","Bite, occlusion"],a:0,expl:'Ortho literally means straight or correct (p.3).'},
+{q:'The Greek word "odontos" translates to:',opts:["Straight","Bone","Teeth","Alignment"],a:2,expl:'Odontos means teeth (p.3).'},
+{q:'Orthodontics is best defined as the branch of science and art of dentistry dealing with facial growth, occlusion development, and:',opts:["Diagnosis, prevention, interception, and treatment of growing and mature dentofacial abnormalities","Surgical extraction of impacted teeth only","Prosthetic replacement of missing teeth","Endodontic therapy of primary teeth"],a:0,expl:'Exact definition includes diagnosis, prevention, interception, and treatment in growing and mature patients (p.3).'},
+{q:'Which group of anatomical structures is collectively termed "dentofacial structures"?',opts:["Teeth and gingiva only","Teeth, jaws, and surrounding facial bones","Cranial vault and sutures only","Tongue, lips, and cheeks"],a:1,expl:'Dentofacial structures are defined as teeth, jaws, and surrounding facial bones (p.3).'},
+{q:'Orthodontic management of dentofacial abnormalities applies to:',opts:["Growing children exclusively","Mature adults exclusively","Both growing and mature individuals","Edentulous newborns only"],a:2,expl:'Definition explicitly covers both growing and mature dentofacial abnormalities (p.3).'},
+{q:'Which of the following is a primary aim of orthodontic treatment regarding children\'s anterior teeth?',opts:["Avoid trauma to prominent incisors","Increase incisor proclination","Delay eruption of permanent incisors","Prevent attrition of canines"],a:0,expl:'Aim #6 is avoiding trauma of prominent incisors in children (p.3).'},
+{q:'All of the following are direct or indirect aims of orthodontic treatment EXCEPT:',opts:["Establishing esthetic harmony","Establishing normal function of the masticatory apparatus","Prevention of traumatic occlusion and speech defects","Inducing mandibular retrusion"],a:3,expl:'Esthetics, masticatory function, and preventing traumatic occlusion/speech defects are aims; inducing retrusion is not (p.3).'},
+{q:'Correction of an abnormal relationship between which two structures is listed as an aim of orthodontic treatment?',opts:["Condyle and glenoid fossa","Nasal septum and vomer","Coronoid process and palate","Maxillary tuberosity and symphysis"],a:0,expl:'Aim #7 is correcting abnormal condyle–glenoid fossa relationship (p.3).'},
+{q:'Which of the following pairs represents two preventive aims of orthodontics?',opts:["Prevention of caries/periodontal disease and inducing open bite","Prevention of caries/periodontal disease and prevention of speech defects","Prevention of tooth eruption and caries","Prevention of facial growth and traumatic occlusion"],a:1,expl:'Aims #3 and #5 explicitly target caries/periodontal diseases and speech defects (p.3).'},
+{q:'Which of the following falls under the "Dental" indications for orthodontic treatment?',opts:["Impaction, trauma, and periodontal disease","Oral habits and speech (phonation)","Esthetics only","Temporomandibular joint dysfunction"],a:0,expl:'Dental indications are impaction, trauma, and periodontal disease (p.3).'},
+{q:'A patient referred for orthodontics due to an abnormal tongue-thrust habit, defective chewing, or phonation errors falls under which indication?',opts:["Dental","Psychological","TMJ","Functional"],a:3,expl:'Habit, speech (phonation), and chewing are Functional indications (p.3).'},
+{q:'Improving a patient\'s dental appearance/esthetics is classified under which category of orthodontic indications?',opts:["Dental","Psychological","TMJ","Skeletal"],a:1,expl:'Esthetic improvement is listed under Psychological indication (p.3).'},
+{q:'Elimination of temporomandibular joint dysfunction (TMD) belongs to which indication category?',opts:["Dental","Functional","TMJ","Psychological"],a:2,expl:'Elimination of TMD is the specific TMJ indication (p.3).'},
+{q:'Which of the following is a recognized CONTRAINDICATION to orthodontic treatment?',opts:["Lack of bony support for the dentition","Impaction of permanent canines","Speech defects","Prominent maxillary incisors"],a:0,expl:'Lack of bony support is one of the 5 contraindications (p.3).'},
+{q:'All of the following are contraindications to orthodontic treatment EXCEPT:',opts:["Poor oral hygiene and lack of cooperation","Poor general or mental health","Medically compromised patients","Presence of traumatic occlusion"],a:3,expl:'Traumatic occlusion is an aim/indication to treat, not a contraindication (p.3).'},
+{q:'A patient who shows "lack of interest" toward wearing appliances should be managed with caution because this is a:',opts:["Functional indication","Psychological benefit","Contraindication","Secondary aim"],a:2,expl:'Lack of interest is explicitly listed as a contraindication (p.3).'},
+{q:'Why is poor oral hygiene combined with lack of cooperation a strict contraindication to orthodontics?',opts:["Appliances worsen plaque retention and require patient compliance","It causes premature sutural fusion","It speeds up condylar growth","It eliminates natural attrition"],a:0,expl:'Poor oral hygiene and lack of cooperation contraindicate treatment (p.3).'},
+{q:'Orthodontic treatment may aid in eliminating or reducing adverse effects in how many main benefit categories?',opts:["One","Two","Four","Three"],a:3,expl:'Three categories: oral function, dental disease, and psychosocial function (p.4).'},
+{q:'Which of the following is NOT one of the three categories of orthodontic treatment benefits?',opts:["Oral function","Cranial vault expansion","Dental disease","Psychosocial function"],a:1,expl:'Cranial vault expansion is not a benefit of orthodontic treatment (p.4).'},
+{q:'How can malocclusion compromise oral function?',opts:["Difficulty in chewing","Jaw discrepancy changing the manner of swallowing","Difficulty producing certain speech sounds","All of the above"],a:3,expl:'Malocclusion compromises chewing, swallowing, and speech sounds (p.4).'},
+{q:'TMJ pain resulting from minor imperfections in occlusion is associated with which parafunctional habits?',opts:["Nail biting and lip licking","Clenching and grinding","Mouth breathing","Thumb sucking"],a:1,expl:'Minor occlusal imperfections cause TMJ pain via clenching and grinding (p.4).'},
+{q:'Malocclusion contributes to dental decay and periodontal disease primarily because of:',opts:["Difficulty maintaining good oral hygiene and lack of natural cleansing benefits","Decreased enamel mineralization","Excessive salivary buffering","Accelerated root resorption"],a:0,expl:'Lack of normal occlusion reduces natural cleansing and complicates oral hygiene (p.4).'},
+{q:'Severe malocclusion and dentofacial deformities strongly influence a child\'s:',opts:["Neural brain volume","Self-esteem and later psychological/social adjustment","Spheno-occipital synchondrosis closure","Deciduous calcification rate"],a:1,expl:'Psychosocial function relates to self-esteem and psychological/social adjustment (p.4).'},
+{q:'Which specific combination lists all five contraindications to orthodontic treatment?',opts:["Poor oral hygiene/cooperation, trauma, habits, speech, TMD","Lack of bony support, impaction, caries, poor health, esthetics","Medically compromised, chewing difficulty, clenching, lack of interest","Poor oral hygiene/cooperation, lack of bony support, poor general/mental health, lack of interest, medically compromised"],a:3,expl:'Exact five contraindications listed on page 3.'},
+{q:'Orthodontic treatment deals directly or indirectly with establishing normal function of the masticatory apparatus.',opts:["True","False","Sometimes","Only in children"],a:0,expl:'Aim #2 is establishing normal masticatory apparatus function (p.3).'},
+{q:'Speech (phonation) is classified under "Dental" indications for orthodontic treatment.',opts:["True","False","Partially","Only in adults"],a:1,expl:'Speech (phonation) is a Functional indication, not Dental (p.3).'},
+{q:'Which of the following statements regarding orthodontic benefits is TRUE?',opts:["Malocclusion never affects swallowing patterns","Dental disease benefits apply only to adults","Untreated severe dentofacial deformities can hinder social adjustment as a child matures","Clenching and grinding cure TMJ pain"],a:2,expl:'Psychosocial benefit highlights long-term social/psychological adjustment (p.4).'},
+{q:'Which pair correctly matches an indication category with its example?',opts:["Dental — Periodontal disease","Functional — Esthetic","TMJ — Chewing","Psychological — Impaction"],a:0,expl:'Periodontal disease is a Dental indication (p.3).'},
+{q:'Which clinical scenario represents an absolute contraindication rather than an indication?',opts:["A cooperative child with prominent incisors prone to trauma","A patient with severe alveolar bone loss lacking bony support and poor oral hygiene","An adult with TMJ pain from minor occlusal interferences","A teenager with esthetic concerns and speech difficulty"],a:1,expl:'Lack of bony support and poor oral hygiene are direct contraindications (p.3).'}
+]},
+/* ===== CHAPTER 2 ===== */
+{id:2,title:"Growth & Scammon's Curves",theme:{bg:"linear-gradient(135deg,#2d5016,#1a3008)",accent:"#22c55e"},questions:[
+{q:'Growth is best defined as:',opts:["Qualitative maturation of tissues","Sequential events from fertilization to adulthood","Sudden increase in height at puberty","The normal change in amount of living substance"],a:3,expl:'Growth is defined as the normal change in amount of living substance (p.5).'},
+{q:'Growth represents which aspect of biological development, and how is it measured?',opts:["Qualitative; in stages","Hormonal; in years","Quantitative; in terms of increments","Functional; in angles"],a:2,expl:'Growth is the quantitative aspect measured in increments (p.5).'},
+{q:'"All normal sequential series of events between fertilization of the ovum and the adult state or maturation" defines:',opts:["Growth increment","Development","Growth spurt","Differential growth"],a:1,expl:'Exact definition of Development from fertilization to maturation (p.5).'},
+{q:'Growth increment is:',opts:["The total adult height","The amount of growth per unit area","The amount of growth per unit of time","The amount of bone resorbed annually"],a:2,expl:'Growth increment = amount of growth per unit of time (p.5).'},
+{q:'A sudden increase in growth rate during a certain period of an organism\'s life (e.g., puberty) is known as:',opts:["Differential growth","Growth spurt","Remodeling","Appositional drift"],a:1,expl:'Sudden increase in growth rate (e.g., puberty spurt) is a growth spurt (p.5).'},
+{q:'Difference in growth rate and time of various organs of the organism is called:',opts:["Growth increment","Somatic curve","Differential growth","Secondary displacement"],a:2,expl:'Differential growth = difference in growth rate and time of various organs (p.5).'},
+{q:'How many general patterns (types) of growth throughout the body are distinguished in Scammon\'s curves?',opts:["Three","Four","Five","Six"],a:1,expl:'Four general patterns are distinguished in mammalian tissues (p.5).'},
+{q:'Which of the following lists Scammon\'s four patterns of growth?',opts:["Somatic, alveolar, dental, genital","Neural, sutural, muscular, somatic","Somatic, neural, lymphatic, genital","Endochondral, membranous, neural, lymphoid"],a:2,expl:"Scammon's 4 curves: Somatic, Neural, Lymphatic, Genital (p.5)."},
+{q:'Which of the following is listed as a method of bone formation (osteogenesis) rather than a growth movement?',opts:["Drift","Primary displacement","Secondary displacement","Endochondral bone formation"],a:3,expl:'Endochondral formation is an osteogenesis method; the others are growth movements (p.5).'},
+{q:'Somatic growth represents an increase in overall body size continuing up to approximately:',opts:["18–20 years in humans","6–7 years in humans","11–13 years in humans","25–30 years in humans"],a:0,expl:'Somatic growth continues up to ~18–20 years in humans (p.5).'},
+{q:'During the prenatal period, somatic growth is characterized as:',opts:["Very slow","Very rapid (weight and height increase)","Static until birth","Absent"],a:1,expl:'Prenatal somatic growth is very rapid in both weight and height (p.5).'},
+{q:'Postnatally, the somatic growth pattern:',opts:["Accelerates in the first months after birth, then gradually declines until the pubertal growth spurt","Declines immediately at birth with no acceleration","Remains constant from birth to 20 years","Follows the lymphoid curve"],a:0,expl:'Postnatal somatic growth accelerates in early months, then declines until puberty (p.6).'},
+{q:'The pubertal somatic growth spurt reaches its peak velocity in girls at:',opts:["9–11 years","11–13 years","13–15 years","15–17 years"],a:1,expl:'Peak velocity in girls is 11–13 years (p.6).'},
+{q:'The pubertal somatic growth spurt reaches its peak velocity in boys at:',opts:["9–11 years","11–13 years","12–14 years","13–15 years"],a:3,expl:'Peak velocity in boys is 13–15 years (p.6).'},
+{q:'Compared to boys, the somatic growth velocity reaches its peak in girls:',opts:["6 months ahead","2 years ahead","1 year after","At the exact same time"],a:1,expl:'11–13 yrs (girls) vs 13–15 yrs (boys) = 2 years ahead (p.6).'},
+{q:'By approximately what age does the somatic growth rate decline to nearly zero?',opts:["13 years","15 years","~20 years","~30 years"],a:2,expl:'Somatic growth rate falls to nearly zero by ~20 years (p.6).'},
+{q:'Growth of the maxilla and mandible follows:',opts:["The neural curve","The somatic curve of growth","The lymphoid curve","The genital curve"],a:1,expl:'Maxilla and mandible are main tissues of the somatic growth curve (p.6).'},
+{q:'Which of the following tissues belong to the somatic growth pattern?',opts:["Brain and eyeballs","Thymus and lymph nodes","Skeletal bones (maxilla, mandible), cartilage, and supporting connective tissues","Gonads"],a:2,expl:'Main somatic tissues: skeletal bones (maxilla, mandible), cartilage, supporting connective tissues (p.6).'},
+{q:'Which growth type is the FIRST to reach most of its adult size?',opts:["The neural","The somatic","The lymphatic","The genital"],a:0,expl:'Neural growth occurs mainly prenatally and early postnatally, reaching >90% by age 6 (p.6).'},
+{q:'By approximately 6 years of age, the brain reaches what proportion of its adult size?',opts:["50%",">90%","60%","25%"],a:1,expl:'The brain reaches >90% of adult size by about 6 years (p.6).'},
+{q:'There is NO adolescent growth spurt in neural growth.',opts:["True","False","Sometimes","Only in males"],a:0,expl:'There is no adolescent growth spurt in neural growth (p.6).'},
+{q:'Regarding neural growth beyond age 6, which statement is accurate?',opts:["All brain development stops completely","It surges to 200%","It declines by 50%","Functional maturation continues beyond this age"],a:3,expl:'Functional maturation continues beyond age 6 even after >90% size is reached (p.6).'},
+{q:'Which organ/system grows rapidly in early life and reaches ~200% of adult size before puberty?',opts:["Lymphoid (Lymphatic)","Somatic","Genital","Neural"],a:0,expl:'Lymphoid curve rises rapidly to ~200% before declining (p.6 graph).'},
+{q:'At what age do lymphatic tissues reach their maximum extent before declining?',opts:["5–7 years","6–8 years","About 11–14 years","18–20 years"],a:2,expl:'Lymphatic tissues reach maximum extent at about 11–14 years (p.6).'},
+{q:'Which statement accurately describes Genital growth?',opts:["Primary and secondary sexual organs remain small until puberty, then grow to adult size","They reach >90% by age 6","They peak at 11–14 years and shrink","They grow fastest prenatally and stop at birth"],a:0,expl:'Genital tissues stay small until puberty, then grow to adult size (p.6).'},
+{q:'Look at Scammon\'s growth curves: at age 10 years, which curve stands around ~40–50% of adult size while neural is near 95%?',opts:["Lymphoid","Genital","Neural","General (Somatic)"],a:3,expl:'On Scammon\'s graph at 10 years, General (Somatic) is ~45–50% while Genital is near 10% and Lymphoid >150% (p.6).'},
+{q:'Which statement correctly distinguishes Growth from Development?',opts:["Growth is the quantitative increase in size, while development is progress/events toward maturation","Development is purely quantitative","Growth and development are identical synonyms","Development stops at birth"],a:0,expl:'Growth is quantitative increase in living substance; development is sequential maturation (p.5).'},
+{q:'The pubertal growth spurt occurs at 11–13 years in boys.',opts:["True","False","Only in girls","Varies by region"],a:1,expl:'11–13 years is for girls; boys peak at 13–15 years (p.6).'},
+{q:'Which growth movement is subdivided into "Primary" and "Secondary" types?',opts:["Displacement","Drift","Remodeling","Endochondral ossification"],a:0,expl:'Displacement is divided into Primary and Secondary displacement (p.5).'},
+{q:'If a 12-year-old boy has not yet hit his peak pubertal facial growth spurt, this is expected because boys peak at:',opts:["8–10 years","10–11 years","13–15 years","18–20 years"],a:2,expl:'Peak somatic velocity in boys is 13–15 years (p.6).'}
+]},
+/* ===== CHAPTER 3 ===== */
+{id:3,title:"Osteogenesis & Synchondroses",theme:{bg:"linear-gradient(135deg,#6b1f2e,#3d0f19)",accent:"#f43f5e"},questions:[
+{q:'Bone may be formed in how many primary connective tissue sites?',opts:["Four","Three","Five","Two"],a:3,expl:'Two sites: cartilaginous (endochondral) and membranous (intramembranous) (p.6).'},
+{q:'Which type of ossification involves a pressure-tolerant cartilage tissue located where direct compression occurs?',opts:["Endochondral ossification","Intramembranous ossification","Sutural apposition","Periosteal drift"],a:0,expl:'Endochondral cartilage is pressure-tolerant at sites of direct compression (p.6).'},
+{q:'All of the following are sites of endochondral bone growth EXCEPT:',opts:["Synchondrosis","Cranial vault sutures","Nasal cartilage and condylar cartilage","Epiphyseal plate"],a:1,expl:'Cranial vault sutures grow intramembranously, not endochondrally (p.7).'},
+{q:'Which of the following undergoes predominantly endochondral ossification?',opts:["Cranial base","Maxilla","Palate","Cranial vault"],a:0,expl:'Cranial base grows via endochondral synchondroses (p.7).'},
+{q:'The spheno-occipital synchondrosis exists in the midline cranial base between the:',opts:["Sphenoid and ethmoid bones","Anterior and posterior parts of the sphenoid body","Occipital and sphenoidal bones","Frontal and parietal bones"],a:2,expl:'Exists in midline cranial base between occipital and sphenoidal bones (p.7).'},
+{q:'The spheno-occipital synchondrosis is the most important synchondrosis in orthodontics because it closes:',opts:["Between 18–20 years of age","Just before birth","Between 3–5 years","Between 5–7 years"],a:0,expl:'Persists up to 18–20 years, longest active cranial base synchondrosis (p.7).'},
+{q:'Regarding sex differences in closure of the spheno-occipital synchondrosis:',opts:["It closes earlier in boys","It never closes in females","It closes at the exact same age in both sexes","It closes a few years earlier in girls than in boys"],a:3,expl:'Closes a few years earlier in girls than in boys (p.7).'},
+{q:'Which synchondrosis lies between the anterior and posterior parts of the body of the sphenoid and closes just before birth?',opts:["Spheno-occipital","Spheno-ethmoidal","Intersphenoidal","Intra-occipital"],a:2,expl:'Intersphenoidal synchondrosis is between anterior/posterior sphenoid body and closes before birth (p.7).'},
+{q:'At what age does the spheno-ethmoidal synchondrosis close?',opts:["Just before birth","1–2 years","18–20 years","About 5–7 years"],a:3,expl:'Spheno-ethmoidal closes at about 5–7 years (p.7).'},
+{q:'The intra-occipital synchondrosis is present inside the occipital bone and closes at:',opts:["Just before birth","3–5 years","5–7 years","18–20 years"],a:1,expl:'Intra-occipital closes at 3–5 years (p.7).'},
+{q:'Which set correctly lists the four important cranial base synchondroses?',opts:["Spheno-occipital, intersphenoidal, spheno-ethmoidal, sella turcica","Spheno-occipital, intercranial, spheno-ethmoidal, intra-occipital","Spheno-occipital, intersphenoidal, spheno-ethmoidal, intra-occipital","Spheno-occipital, intrasphenoidal, spheno-ethmoidal, sella turcica"],a:2,expl:'Exact four synchondroses on page 7.'},
+{q:'In the maxillary complex, which structure is a region for endochondral growth where cartilage is converted into bone?',opts:["Zygomatic process","Palatal shelf","Maxillary tuberosity","Nasal capsule"],a:3,expl:'Nasal capsule is the endochondral region in the maxillary complex (p.7).'},
+{q:'In the mandible, which two regions involve endochondral bone growth?',opts:["Coronoid process and mental protuberance","Midline symphysis and condyle","Body and ramus","Antegonial notch and alveolar crest"],a:1,expl:'Midline symphysis and condyle are the endochondral regions in the mandible (p.7).'},
+{q:'Which sequence accurately describes intramembranous ossification?',opts:["Mesenchymal cells → osteoblasts → osteoid matrix → calcification → bone","Mesenchymal cells → chondrocytes → cartilage → calcification → bone","Osteoclasts → osteoid → osteoblasts → bone","Fibroblasts → chondroblasts → bone"],a:0,expl:'Exact pathway of intramembranous ossification with no cartilage model (p.7).'},
+{q:'Which of the following are formed by intramembranous bone formation?',opts:["Mandibular condyles","Spheno-occipital synchondrosis","Nasal septum","Cranial vault (and skull bones/sutures)"],a:3,expl:'Cranial vault and sutures form intramembranously (p.7).'},
+{q:'Intramembranous mode of growth is found at which of the following?',opts:["Maxilla only","Mandible only","Maxilla, mandible, and cranial vault","Epiphyseal plates of long bones"],a:2,expl:'Intramembranous growth occurs in maxilla, mandible, and cranial vault (p.7).'},
+{q:'Growth by surface deposition becomes especially significant after the cessation of neural growth around:',opts:["1–2 years","3–4 years","18–20 years","7–8 years"],a:3,expl:'Surface deposition is very important after cessation of neural growth at 7–8 years (p.8).'},
+{q:'Growth by surface deposition is described as:',opts:["Additive or appositional in nature","Interstitial in nature","Purely endochondral","Exclusively resorptive"],a:0,expl:'Surface deposition is additive or appositional in nature (p.8).'},
+{q:'Enlargement of the nasal cavity, paranasal sinuses, and medullary cavities occurs through:',opts:["Deposition on inner surface and resorption on outer surface","Cartilage expansion","Resorption on inner surface of the space and deposition on outer surface","Sutural fusion"],a:2,expl:'Resorption occurs on the inner surface and deposition on the outer surface (p.8).'},
+{q:'What determines the final shape of individual skull bones during later growth periods?',opts:["Balance between resorption and deposition","Intersphenoidal closure","Neural growth spurt","Presence of fontanelles"],a:0,expl:'Balance between bone resorption and deposition determines bone shape (p.8).'},
+{q:'How many histological layers does each cranial suture possess?',opts:["2 layers","3 layers","4 layers","5 layers"],a:3,expl:'Each suture has 5 layers (p.8).'},
+{q:'Which breakdown correctly describes the 5 layers of a cranial suture?',opts:["3 fibrous layers + 2 cellular layers","2 cartilaginous layers + 2 fibrous layers + 1 intermediate layer","2 osteogenic/cellular layers + 2 fibrous layers + 1 intermediate layer","1 osteogenic layer + 4 fibrous layers"],a:2,expl:'2 osteogenic/cellular + 2 fibrous + 1 intermediate layer (p.8).'},
+{q:'What is contained within the single intermediate layer of a suture?',opts:["Hyaline cartilage","Osteoclasts only","Calcified matrix","Fibers and blood vessels"],a:3,expl:'The intermediate layer contains fibers + blood vessels (p.8).'},
+{q:'Why can two adjacent bones separated by a suture grow at different rates?',opts:["Each adjacent bone has an independent growth site","One bone grows endochondrally while the other does not","Suture layers block blood flow to one side","Growth occurs only in the intermediate layer"],a:0,expl:'Each adjacent bone has an independent growth site (p.8).'},
+{q:'In sutures, proliferation of connective tissue followed by replacement of bone is called:',opts:["Endochondral bone growth","Intramembranous growth","Interstitial cartilage growth","Synchondrosal drift"],a:1,expl:'Sutural bone formation is intramembranous (p.7–8).'},
+{q:'Intramembranous bone formation does NOT involve intermediate cartilage formation.',opts:["True","False","Sometimes","Only in the maxilla"],a:0,expl:'No cartilage model is involved in intramembranous ossification (p.7).'},
+{q:'Growth of the cranial base is primarily intramembranous.',opts:["True","False","Only after age 7","Only in females"],a:1,expl:'Cranial base growth is primarily endochondral (synchondroses) (p.7, 11).'},
+{q:'Which statement regarding bone formation is TRUE?',opts:["Bone formation in the extremities is intramembranous","Surface deposition is unimportant after age 8","All skull bones depend on surface deposition, even areas that started with cartilaginous growth","Sutures are endochondral growth plates"],a:2,expl:'All skull bones depend on surface deposition even if started cartilaginously (p.8).'},
+{q:'Which of the following is NOT formed by surface deposition/drift of an internal space?',opts:["Nasal cavity","Condylar cartilage","Paranasal sinuses","Medullary cavities"],a:1,expl:'Condylar cartilage grows endochondrally; nasal cavity, sinuses, and medullary cavities enlarge by surface drift (p.8).'},
+{q:'Which cranial base synchondrosis closes FIRST during human development?',opts:["Spheno-occipital","Spheno-ethmoidal","Intersphenoidal","Intra-occipital"],a:2,expl:'Intersphenoidal closes just before birth (earliest of the four) (p.7).'}
+]},
+/* ===== CHAPTER 4 ===== */
+{id:4,title:"Growth Theories & Movements",theme:{bg:"linear-gradient(135deg,#334155,#1e293b)",accent:"#64748b"},questions:[
+{q:'According to the Classical Theory of sutural growth, what pushes adjacent bones apart?',opts:["Surrounding soft tissues and organs","Proliferation of sutural tissue","Expansion of the eyeball","Negative intraoral pressure"],a:1,expl:'Classical Theory states proliferation of sutural tissue pushes/separates adjacent bones (p.9).'},
+{q:'Under the Classical Theory, the suture itself is considered a:',opts:["Growth center","Growth site","Passive filler","Resorptive membrane"],a:0,expl:'Under Classical Theory, the suture is a growth center (p.9).'},
+{q:'What analogy best summarizes the Classical Theory of sutural growth?',opts:["Suture is just the gap that fills in","Soft tissue is the engine","Suture is the engine","Bone is the passive matrix"],a:2,expl:'Analogy: "Suture is the engine" (p.9 table).'},
+{q:'Who proposed the Functional Matrix Theory?',opts:["Andrews","Moss","Scammon","Angle"],a:1,expl:'Melvin Moss proposed the Functional Matrix Theory (p.9).'},
+{q:'According to the Functional Matrix Theory, separation of skull bones at sutures is produced by:',opts:["Independent genetic programming inside the suture","Proliferation of sutural cartilage","Action of osteoclasts alone","Growth/expansion of surrounding soft tissues and organs (e.g., brain or eyeball)"],a:3,expl:'Surrounding soft tissues/organs grow and push skull bones apart (p.9).'},
+{q:'Under Moss\'s Functional Matrix Theory, how does the suture respond to tension?',opts:["It undergoes immediate fusion","It resorbs adjacent bone","It forms new bone to fill the gap","It turns into an epiphyseal plate"],a:2,expl:'The suture responds to tension by forming new bone (p.9).'},
+{q:'According to the Functional Matrix Theory, the suture is considered a:',opts:["Growth site, not a growth center","Growth center, not a growth site","Primary pacemaker of facial growth","Endochondral driver"],a:0,expl:'Suture is a growth site, not a growth center (p.9).'},
+{q:'According to the Functional Matrix Theory, bone is the primary determinant of its own growth.',opts:["True","False","Sometimes","Only in sutures"],a:1,expl:'Soft tissues/functional matrices are the primary determinants, not bone itself (p.9).'},
+{q:'During craniofacial enlargement, how many kinds of growth movements are observed?',opts:["Two","Four","Three","Five"],a:2,expl:'Three kinds: Cortical drift, Displacement, and Remodeling (p.9).'},
+{q:'Which of the following lists the three kinds of craniofacial growth movements?',opts:["Endochondral, intramembranous, sutural","Cortical drift, displacement, and remodeling","Primary, secondary, and tertiary drift","Proliferation, calcification, and resorption"],a:1,expl:'Exact three growth movements on page 9.'},
+{q:'Relocation or movement of bone in the SAME direction as its own growth is called:',opts:["Primary displacement","Secondary displacement","Cortical drift","Translation"],a:2,expl:'Cortical drift = movement in the same direction of its own growth (p.9).'},
+{q:'Cortical drift is produced by:',opts:["Deposition on both sides simultaneously","Deposition of bone on one side while resorption occurs on the opposite side","Movement of the entire bone as a unit","Expansion of an adjacent organ"],a:1,expl:'Deposition on one side + resorption on opposite side produces drift (p.9).'},
+{q:'Elongation of the mandibular body to accommodate the erupting molars is an example of:',opts:["Cortical drift","Secondary displacement","Primary displacement","Sutural separation"],a:0,expl:'Mandibular body elongation for erupting molars is the textbook example of cortical drift (p.9).'},
+{q:'Combinations of deposition and resorption occurring in skull bones resulting in movement toward the depository surface is termed:',opts:["Remodeling","Drift","Physiologic resorption","Secondary displacement"],a:1,expl:'Movement occurs toward the depository surface in drift (p.9).'},
+{q:'Which growth movement refers to the movement of the whole bone as a unit?',opts:["Displacement","Cortical drift","Remodeling","Apposition"],a:0,expl:'Displacement is movement of the whole bone as a unit (p.9).'},
+{q:'Primary displacement is defined as:',opts:["Movement of bone in relation to enlargement of other bones","Movement of bone in the same direction to its own growth","Movement of bone in the opposite direction to its own growth","Differential resorption of inner surfaces"],a:2,expl:'Primary displacement = opposite direction to its own growth (p.9).'},
+{q:'The movement of a bone in response to its own growth is termed:',opts:["Rotation","Primary displacement","Secondary displacement","Differentiation"],a:1,expl:'Primary displacement occurs in response to the bone\'s own growth (p.9–10).'},
+{q:'What is the main function of primary displacement?',opts:["To fuse cranial sutures","To increase cortical thickness","To reduce nasal cavity volume","To maintain the relationship of bones to each other as they are carried away from their articulation"],a:3,expl:'Maintains bone relationships as they are carried away from their articulation (p.9).'},
+{q:'Growth of the mandible upward and backward while the whole bone moves downward and forward is an example of:',opts:["Secondary displacement","Cortical drift","Primary displacement","Pure remodeling"],a:2,expl:'Mandible grows upward/backward while moving downward/forward = primary displacement (p.9).'},
+{q:'Secondary displacement is defined as:',opts:["Movement of bone opposite to its own growth","Cortical drift toward the depository side","Resorption on the inner surface only","Movement of a bone in the same direction of growth of other adjacent or distant bones"],a:3,expl:'Secondary displacement = movement in same direction of growth of adjacent/distant bones (p.10).'},
+{q:'Growth of the anterior cranial base causes which type of movement of the nasomaxillary complex?',opts:["Secondary displacement of the maxilla","Primary displacement of the maxilla","Remodeling of the maxilla","Retro-displacement of the mandible"],a:0,expl:'Anterior cranial base grows 1ry, then nasomaxillary complex moves 2ry to it (p.10).'},
+{q:'Which growth movement is defined as "the change in size and shape of the bone as a result of differential resorption and deposition of the inner and outer surfaces"?',opts:["Primary displacement","Secondary displacement","Cortical drift","Remodeling"],a:3,expl:'Exact definition of Remodeling on page 10.'},
+{q:'Which two cell types carry out bone remodeling?',opts:["Chondroblasts and fibrocytes","Osteocytes and odontoblasts","Osteoclasts and osteoblasts","Macrophages and ameloblasts"],a:2,expl:'Remodeling occurs by the action of osteoclasts and osteoblasts (p.10).'},
+{q:'In Moss\'s Functional Matrix Theory, the suture is "just the gap that fills in as soft tissues expand."',opts:["True","False","Partially true","Only in cranial base"],a:0,expl:'Exact analogy in the comparison table on page 9.'},
+{q:'In secondary displacement of the nasomaxillary complex, the primary driver is growth of the:',opts:["Mandibular symphysis","Coronoid process","Alveolar bone","Anterior cranial base"],a:3,expl:'Anterior cranial base grows 1ry, causing 2ry displacement of nasomaxillary complex (p.10).'},
+{q:'Which comparison between Cortical Drift and Primary Displacement is accurate?',opts:["Both move bone in the opposite direction of growth","Drift moves bone in the same direction as its own growth; primary displacement moves bone in the opposite direction","Drift moves the whole bone as a unit; displacement changes shape locally","Both require adjacent organ expansion"],a:1,expl:'Drift = same direction; primary displacement = opposite direction (p.9).'},
+{q:'A bone translates downward and forward because its posterior and superior borders grow against an articulation. This describes:',opts:["Cortical drift","Secondary displacement","Primary displacement","Sutural fusion"],a:2,expl:'Growth against an articulation pushes the bone in the opposite direction (primary displacement) (p.9).'},
+{q:'A bone translates forward simply because a distant cranial base bone behind it is elongating. This describes:',opts:["Primary displacement","Secondary displacement","Cortical drift","Periosteal remodeling"],a:1,expl:'Movement due to enlargement of another bone = secondary displacement (p.10).'},
+{q:'Which statement about the Classical Theory is FALSE?',opts:["Suture tissue proliferates to separate bones","Suture is responsible for growth","Surrounding organs are the primary engine driving sutural separation","Suture is considered a growth center"],a:2,expl:'Surrounding organs driving separation is Moss\'s theory, NOT Classical Theory (p.9).'},
+{q:'Which summary formula correctly captures Moss\'s Functional Matrix sequence?',opts:["Soft tissue grows → bones separate → new bone fills the gap","Suture grows → bones separate → soft tissue stretches","Cartilage resorbs → bones fuse → muscle grows","Bone drifts → suture closes → organ shrinks"],a:0,expl:'Exact "Easy to remember" summary for Moss on page 9.'}
+]},
+/* ===== CHAPTER 5 ===== */
+{id:5,title:"Cranium & Middle Face Growth",theme:{bg:"linear-gradient(135deg,#5b2c8e,#3b1560)",accent:"#a855f7"},questions:[
+{q:'Growth of the skull may be subdivided into growth of the cranium (vault & base) and growth of the:',opts:["Cervical vertebrae","Hyoid apparatus","Nasal septum only","Face (middle face & mandible)"],a:3,expl:'Skull growth = cranium (vault & base) + face (middle face & mandible) (p.10).'},
+{q:'The cranial vault grows primarily secondary to the growth of the:',opts:["Mandible","Brain","Tongue","Maxillary sinuses"],a:1,expl:'Cranium grows secondary to the growth of the brain (p.10).'},
+{q:'Early in postnatal life, selective resorption occurs on the inner surface of cranial vault bones in order to:',opts:["Help flatten them out as they expand","Thicken the mastoid process","Create the frontal sinus","Fuse the coronal suture"],a:0,expl:'Selective inner resorption helps flatten cranial bones as they expand (p.10).'},
+{q:'Why is the increase in thickness of cranial vault bones NOT uniform between internal and external surfaces?',opts:["Inner surface is endochondral while outer is membranous","Outer surface undergoes continuous resorption","Inner surface is influenced by brain growth while outer plate has mechanical influences","Brain stops growing before birth"],a:2,expl:'Inner cranial surface is under brain influence; outer plate has mechanical influences (p.10).'},
+{q:'Cranial superstructures (supra-orbital and mastoid structures) resulting from mechanical influences on the outer plate are:',opts:["Fully developed at birth","Marked only in infancy","More marked in females than males","Usually more marked in males than in females"],a:3,expl:'Supra-orbital and mastoid structures are usually more marked in males (p.10).'},
+{q:'At birth, the frontal bone is separated by which suture and lacks which sinus?',opts:["Metopic suture; no frontal sinus","Mid-sagittal suture; no maxillary sinus","Coronal suture; no sphenoid sinus","Lambdoid suture; no ethmoid sinus"],a:0,expl:'At birth, frontal bone is separated by the metopic suture and has no frontal sinus (p.10).'},
+{q:'At birth, which cranial vault structures are underdeveloped?',opts:["Parietal bones","Occipital condyles","Mastoid bone and supraorbital bone","Temporal squama"],a:2,expl:'Mastoid and supraorbital bones are underdeveloped at birth (p.11).'},
+{q:'The developing frontal sinus gradually replaces:',opts:["Spongy bone between the external plates","The inner dural membrane","The metopic cartilage","The anterior fontanelle"],a:0,expl:'Developing frontal sinus gradually replaces spongy bone between external plates (p.11).'},
+{q:'Which two cranial vault sutures open during anteroposterior growth (driven primarily by cranial base growth)?',opts:["Metopic and mid-sagittal","Coronal and lambdoid","Interparietal and parieto-temporal","Nasal and frontomaxillary"],a:1,expl:'Coronal and lambdoid sutures open during anteroposterior growth (p.11).'},
+{q:'When does the mid-sagittal suture (which opens during lateral vault growth) finally close?',opts:["During the first year of life","At 5–7 years","At 12–14 years","Middle of the third decade of life (~25 years)"],a:3,expl:'Mid-sagittal suture does not close until the middle of the third decade of life (p.11).'},
+{q:'In the cranial base, cartilaginous growth at the center of a synchondrosis acts like:',opts:["A fibrous gomphosis","A single periosteal layer","A double epiphyseal plate like fibrous suture","An articular disc"],a:2,expl:'Synchondrosis acts as a double epiphyseal plate like fibrous suture (p.11).'},
+{q:'Anteroposterior growth of the cranial base displaces the maxilla downward and forward (secondary displacement), giving space for:',opts:["The eyeball","The oropharynx","The frontal sinus","The mastoid air cells"],a:1,expl:'Downward/forward maxillary displacement gives space for the oropharynx (p.11).'},
+{q:'Vertical growth (increase in height) of the cranial base provides space for:',opts:["Frontal sinus","Nasal bone","Mandibular ramus (followed by alveolar process)","Zygomatic arch"],a:2,expl:'Gives chance for nasomaxillary growth and leaves space for the ramus to grow vertically, followed by alveolar process (p.11).'},
+{q:'All of the following are included in the "middle face" EXCEPT:',opts:["Mandibular body","Orbits and their contents","Nasal cavity and maxillary sinuses","Upper alveolar process and palate"],a:0,expl:'Middle face = orbit, nasal cavity, maxillary sinuses, upper alveolar process, palate (p.11).'},
+{q:'The middle face expands in width, depth, and height, but which dimension is the most remarkable?',opts:["Width","Depth","Height","Transverse thickness"],a:2,expl:'The last dimension (height) is more remarkable (p.11).'},
+{q:'Before age 7, transverse growth of the face involves displacement and drift along the sagittal suture system, EXCEPT:',opts:["Interparietal and metopic sutures","Coronal suture","Middle palatine suture and mandibular symphysis","Nasal suture and cranial base cartilage"],a:1,expl:'Sagittal suture system includes interparietal, metopic, nasal, middle palatine, symphysis, cranial base cartilage (p.12).'},
+{q:'During the first year of life, the frontal bone and the mandible become continuous bones due to union of:',opts:["Mid-sagittal suture and condyle","Coronal suture and gonial angle","Metopic suture and mandibular symphysis","Lambdoid suture and mental foramen"],a:2,expl:'Union of metopic suture and mandibular symphysis occurs during the 1st year (p.12).'},
+{q:'The increase in width of the maxillary complex after 7 years occurs primarily through:',opts:["Expansion of the metopic suture","Bone drift (deposition on lateral surfaces with resorption from inner surfaces)","Growth at the spheno-occipital synchondrosis","Symphyseal cartilage growth"],a:1,expl:'After 7 years, neural growth is complete and width is attained by bone drift (lateral deposition, inner resorption) (p.12).'},
+{q:'In lateral and posterior drift of the zygomatic bone, which surfaces are resorptive (- -) and which are depository (+ +)?',opts:["Anterior & inner are resorptive; posterior & lateral are depository","Posterior & lateral are resorptive; anterior & inner are depository","Superior is resorptive; inferior is depository","All surfaces are depository"],a:0,expl:'Zygomatic bone: resorptive anterior & inner; depository posterior & lateral (p.13 caption).'},
+{q:'Vertical growth (height) of the midface results from:',opts:["Displacement only","Roughly half displacement and half drift","Drift only","Cranial vault flattening"],a:1,expl:'Roughly half of vertical growth results from displacement, half from drift (p.13).'},
+{q:'At birth, what is the vertical relationship between the nasal floor and the orbital floors?',opts:["Nasal floor is much lower","Nasal floor is higher","Nasal floor is halfway to the palate","Nasal floor is at the same level as the orbital floors"],a:3,expl:'At birth the nasal floor is at the same level as the orbital floors (p.13).'},
+{q:'During the first 7 years of life, vertical growth of the nasomaxillary complex occurs via secondary displacement from anterior cranial base growth AND downward growth of the:',opts:["Mandibular condyle","Palatal vault","Nasal cartilage due to increased respiratory demand","Maxillary tuberosity"],a:2,expl:'Downward growth of nasal cartilage results from increased respiratory demand (functional matrix theory) (p.13).'},
+{q:'Growth of the maxilla in the vertical dimension after 7 years is mainly due to:',opts:["Growth of the synchondrosis","Growth of the alveolus (eruption of teeth) and palatal drift","Growth of cranial vault sutures","Expansion of the frontal sinus"],a:1,expl:'After 7 years, eruption causes downward/forward alveolar growth and drift accounts for ~half of vertical growth (p.13).'},
+{q:'At birth the palate is relatively flat, whereas in adults it is vault-shaped primarily due to:',opts:["Resorption of the palatal vault only","Expansion of the sphenoid sinus","Deposition of the alveolar crestal bone (plus downward palatal drift)","Bone deposition on the nasal floor"],a:2,expl:'Alveolar crestal bone deposition (with tooth eruption) and palatal drift deepen the vault (p.13).'},
+{q:'After 7 years, why does the nasal floor end up at a LOWER position than the orbital floor?',opts:["Nasal floor is resorptive (exceeding orbital floor resorption) while palate and alveolar process are depository","Nasal floor is depository while palate is resorptive","Orbits move superiorly by brain shrinkage","Mid-sagittal suture closes"],a:0,expl:'Resorption in the nasal floor exceeds that of the orbit while palate/alveolus deposit (p.13).'},
+{q:'Which group lists the sutures concerned with attaching the nasomaxillary complex to the cranial base?',opts:["Frontonasal, Fronto-maxillary, intersphenoidal, Zygomatico-temporal, Pterygo-palatine","Frontonasal, Fronto-maxillary, Fronto-zygomatic, Zygomaticomaxillary, Maxillary-palatine","Frontonasal, Fronto-maxillary, Fronto-zygomatic, Zygomaticomaxillary, Zygomatico-temporal, Pterygo-palatine","Coronal, lambdoid, metopic, sagittal, squamosal"],a:2,expl:'Exact 6 sutures listed on page 14 (a–f).'},
+{q:'Surface deposition on the anterior cranial base / cranial base growth displaces the nasomaxillary complex:',opts:["Upward and backward","Upward only","Downward and backward","Downward and forward"],a:3,expl:'Sutures are aligned so cranial base growth 2ry displaces the middle face downward and forward (p.14).'},
+{q:'After 7 years, when surrounding soft tissue translates the maxilla downward and forward opening sutures where bone is added, this is:',opts:["Secondary displacement","Primary displacement","Pure resorption","Endochondral shift"],a:1,expl:'Translation due to its own growth/soft tissue matrix adding bone at its sutures is primary displacement (p.14).'},
+{q:'During maxillary anteroposterior bone drift after 7 years, which structure drifts FORWARDS?',opts:["Lateral orbital rim","Zygomatic arch","Nasal bone","Maxillary tuberosity"],a:2,expl:'Nasal bone drifts forwards; lateral orbital rim, zygomatic arch, and tuberosity drift backwards (p.14).'},
+{q:'Normal growth of the maxilla occurs by:',opts:["Displacement and drift","Drift only","Endochondral replacement only","Symphyseal cartilage only"],a:0,expl:'Normal growth of the maxilla occurs by both displacement and drift (p.12–15).'}
+]},
+/* ===== CHAPTER 6 ===== */
+{id:6,title:"Growth of the Mandible",theme:{bg:"linear-gradient(135deg,#0e4d5c,#052e38)",accent:"#06b6d4"},questions:[
+{q:'At birth, how does the mandible appear anatomically?',opts:["A thick square bone with long rami","A completely fused bone with well-defined body","A curved bar of bone with short rami and an ill-defined body","A bone with prominent alveolar and condylar processes"],a:2,expl:'At birth mandible appears like a curved bar with short rami and ill-defined body (p.15).'},
+{q:'At birth, the mandible lacks alveolar and condylar processes and possesses two carrot-shaped condylar cartilages extending to the:',opts:["Mental foramina","Symphysis","Coronoid tips","Mandibular foramina"],a:3,expl:'Carrot-shaped condylar cartilages extend to the mandibular foramina (p.15).'},
+{q:'According to the Sinai University notes, what is the mandibular (gonial) angle at birth?',opts:["90°","175°","110°","120°"],a:1,expl:'Pages 15 and 17 explicitly state the mandibular angle at birth is 175°.'},
+{q:'Growth in width of the mandible during the first year of life is contributed to by:',opts:["Antegonial notch deposition","Coronoid resorption","Symphyseal cartilage growth","Mental foramen drift"],a:2,expl:'Symphyseal cartilage growth contributes to width during the first year of life (p.15).'},
+{q:'In which directions do the mandibular condyles grow via endochondral bone formation?',opts:["Upwards, backwards, and laterally","Downwards, forwards, and medially","Strictly vertically","Forward and laterally only"],a:0,expl:'Condyles grow upwards, backwards, and laterally (p.15).'},
+{q:'During growth in width of the mandible, the coronoid process drifts:',opts:["Forward","Downward","Backward","Medially"],a:2,expl:'The coronoid process drifts backward (p.15).'},
+{q:'According to the "V Principle of Growth," bone is:',opts:["Deposited on the outer surface and resorbed on the inner surface","Deposited on the inner surface of the V shaped bone and resorbed on the outer surface","Deposited equally on both surfaces","Resorbed on both inner and outer surfaces"],a:1,expl:'Inner surface deposition + outer surface resorption widens and elongates the V (p.15).'},
+{q:'In the V Principle of Growth, bone is always deposited:',opts:["Away from the direction of growth","Perpendicular to the condyle","Towards the surface (direction) of growth","Exclusively at the midline"],a:2,expl:'Bone is deposited towards the surface of growth (p.15).'},
+{q:'How does ramus cortical drift increase the depth and room for developing posterior teeth?',opts:["Resorption of the anterior border and deposition on the posterior border (where deposition exceeds resorption)","Deposition on the anterior border and resorption on the posterior border","Equal resorption on both borders","Resorption along the inferior border"],a:0,expl:'Anterior border resorbs while posterior border deposits more, shifting ramus backward (p.16).'},
+{q:'The increase in the length of the mandible is achieved by:',opts:["Condylar growth and apposition on the posterior border of the ramus","Backward growth of the posterior border of the ramus","Both condylar growth and ramus cortical drift","Symphyseal expansion after age 10"],a:2,expl:'Condylar growth + posterior ramus apposition (ramus drift) lengthens the mandible (p.16).'},
+{q:'Growth at the head of the condyle upwards, backwards, and laterally expresses mandibular movement as downward and forward, which is:',opts:["Secondary displacement","Primary displacement","Cortical drift","Pure remodeling"],a:1,expl:'Movement of whole mandible opposite to condylar growth direction is primary displacement (p.16).'},
+{q:'Growth center/primary cartilage of the mandible is located in the:',opts:["Condylar cartilage","Coronoid process","Body","Ramus"],a:0,expl:'Condylar cartilage is the major endochondral growth site of the mandible (p.15–16).'},
+{q:'Growth of the mandibular condyle occurs by:',opts:["Membranous apposition only","Cartilaginous proliferation (endochondral)","Sutural expansion","Periosteal resorption"],a:1,expl:'Condylar growth occurs via cartilaginous proliferation / endochondral ossification (p.15).'},
+{q:'The mandibular ramus increases significantly in vertical dimension primarily to accommodate:',opts:["Brain growth","Closure of the metopic suture","Frontal sinus aeration","Marked downward growth of the nasomaxillary complex and eruption of teeth"],a:3,expl:'Vertical ramus growth accommodates downward nasomaxillary growth and tooth eruption (p.17).'},
+{q:'What is the chief factor in the vertical formation and growth of the alveolar process?',opts:["Normal cranial base drift","Lengthening of the condyle","Eruption of teeth","Chin prominence"],a:2,expl:'Alveolar process increases vertically due to eruption of teeth (p.17).'},
+{q:'Bone is deposited along the entire inferior surface of the mandibular body EXCEPT at the:',opts:["Chin","Antegonial notch","Symphysis","Canine region"],a:1,expl:'Inferior border receives bone deposition EXCEPT for the antegonial notch (p.17).'},
+{q:'How does chin prominence increase during mandibular growth?',opts:["Resorption at the chin and deposition above it","Symphyseal widening at puberty","Deposition at the chin and resorption just above it","Anterior border ramus deposition"],a:2,expl:'Chin prominence increases by deposition at the chin and resorption just above it (p.17).'},
+{q:'With the growth of the mandible, the gonial angle:',opts:["Decreases","Increases","Remains the same","First increases then decreases"],a:0,expl:'Gonial angle decreases with growth (p.17).'},
+{q:'In adults, the mandibular (gonial) angle decreases from about 175° at birth to approximately:',opts:["90–100°","100–110°","120–130°","145–155°"],a:2,expl:'Decreases from ~175° at birth to ~120–130° in adults (p.17).'},
+{q:'What causes the decrease in the gonial angle from birth to adulthood?',opts:["Resorption of the posterior border of the ramus","Loss of deciduous molars","Backward tilting of the condyle","Uprighting of the ramus accompanied by addition of bone to its posterior border"],a:3,expl:'Uprighting of ramus + bone addition on posterior border reduces the gonial angle (p.17).'},
+{q:'During mandibular growth, the mandibular foramen moves into a more:',opts:["Anterior and inferior position","Posterior and superior position","Anterior and superior position","Medial and inferior position"],a:1,expl:'Mandibular foramen moves into a more posterior and superior position (p.17).'},
+{q:'During the early years of life, the mental foramen is situated below the:',opts:["Deciduous lateral incisor (B)","Deciduous canine (C)","Mesiobuccal cusp of the first deciduous molar (D)","Distal root of the second deciduous molar (E)"],a:2,expl:'Early in life, mental foramen is below the mesiobuccal cusp of the first deciduous molar (D) (p.17).'},
+{q:'In the adult mandible, where is the mental foramen located?',opts:["Below the canine","Below the central incisor","Below the second molar","Between the first and second premolars"],a:3,expl:'In adults it is located between the first and second premolars (p.17).'},
+{q:'Why does the mental foramen shift posteriorly relative to the teeth from childhood to adulthood?',opts:["Backward and outward inclination of the canal as bone is added to the outer surface of the mandibular body","Resorption of the mental protuberance","Forward migration of the condyle","Mesial eruption of incisors"],a:0,expl:'Backward and outward inclination of the canal carries the foramen backward as outer bone is added (p.17).'},
+{q:'The mandible grows longer by apposition of new bone on the posterior surface of the:',opts:["Coronoid process","Ramus","Symphysis","Mental protuberance"],a:1,expl:'Apposition on the posterior border of the ramus (plus condylar growth) lengthens the mandible (p.16).'},
+{q:'Which statement regarding the V Principle of Growth is TRUE?',opts:["Bone is resorbed on the inner surface","Bone is deposited away from the direction of growth","Bone is deposited on the inner surface and resorbed on the outer surface","It applies only to cranial sutures"],a:2,expl:'V principle: inner deposition, outer resorption, toward surface of growth (p.15).'},
+{q:'At birth, the mandible has a well-developed alveolar process and condylar process.',opts:["True","False","Partially true","Only in males"],a:1,expl:'At birth, there is NO alveolar or condylar process (p.15).'},
+{q:'Which anatomical area of the mandible does NOT receive appositional bone deposition along the inferior border?',opts:["Mental region","Molar body region","Gonial angle inferior border","Antegonial notch"],a:3,expl:'Deposition occurs along the entire inferior border except the antegonial notch (p.17).'},
+{q:'Which summary correctly describes mandibular condylar growth vs. whole-bone displacement?',opts:["Grows downward/forward; moves upward/backward","Grows upward/forward; moves downward/backward","Grows upward/backward/laterally; moves downward/forward","Both growth and displacement are upward/backward"],a:2,expl:'Condyle grows upward/backward/laterally; mandible displaces downward/forward (p.15–16).'},
+{q:'During infancy, symphyseal cartilage growth contributes to mandibular length rather than width.',opts:["True","False","Only in males","Only after age 3"],a:1,expl:'Symphyseal cartilage growth contributes to mandibular WIDTH during the 1st year (p.15).'}
+]},
+/* ===== CHAPTER 7 ===== */
+{id:7,title:"Normal Occlusion & Gum Pads",theme:{bg:"linear-gradient(135deg,#1a4d4d,#0a2e2e)",accent:"#14b8a6"},questions:[
+{q:'In normal occlusion, the two dental arches should be in harmony in which planes?',opts:["Antero-posteriorly (overjet)","Vertically (overbite)","Medio-laterally (symmetry in midlines)","All of the above"],a:3,expl:'Harmony must exist AP (overjet), vertically (overbite), and mediolaterally (midlines) (p.18).'},
+{q:'The term "overjet" refers to:',opts:["The horizontal distance between the labial surfaces/incisal edges of upper and lower incisors","The vertical overlap of upper and lower incisors","The vertical overlap of molars","Midline deviation"],a:0,expl:'Overjet is the horizontal overlap/distance between upper and lower incisors (p.18).'},
+{q:'In normal occlusion, the upper arch is wider than the lower arch, resulting in an anterior overjet of:',opts:["0–1 mm","2–3 mm","4–6 mm","6–8 mm"],a:1,expl:'Normal anterior overjet is 2–3 mm (p.18).'},
+{q:'In normal occlusion, upper anterior teeth should cover what fraction of the labial surface of lower anterior teeth (overbite)?',opts:["1/8–1/6","1/2–2/3","1/4–1/3","Complete (100%) coverage"],a:2,expl:'Normal overbite covers 1/4–1/3 of the labial surface of lower anteriors (p.18).'},
+{q:'In normal molar relation, which cusp of the maxillary molars occludes in the buccal groove of the lower molars?',opts:["Mesio-buccal cusp","Disto-buccal cusp","Mesio-lingual cusp","Disto-lingual cusp"],a:0,expl:'Mesiobuccal cusp of maxillary molar occludes in buccal groove of lower molar (p.18).'},
+{q:'In normal occlusion, the occlusal plane (Curve of Spee) should be:',opts:["Deeply curved","Flat or slightly curved","Markedly reversed","Angled at 45°"],a:1,expl:'Curve of Spee should be flat or slightly curved (p.18).'},
+{q:'The Gum Pad Stage extends from:',opts:["Birth until eruption of the first deciduous teeth (~6 months)","6 months to 2.5 years","4th MIU to 2.5 years","Birth until 6 years"],a:0,expl:'Gum pad stage: birth until eruption of first deciduous teeth (~6 months) (p.18).'},
+{q:'When is the full deciduous dentition set normally complete?',opts:["12 months","18 months","About 2.5 years","6 years"],a:2,expl:'Full deciduous set is complete at about 2.5 years (p.18).'},
+{q:'The Mixed dentition stage spans from eruption of the 1st permanent tooth till shedding of the last deciduous tooth, covering:',opts:["2.5–6 years","6–12 years","12–16 years","17–21 years"],a:1,expl:'Mixed dentition stage: 6–12 years (p.18).'},
+{q:'What are the approximate age boundaries for Early permanent dentition and Adult dentition stages?',opts:["Early permanent: 12 years and thereafter; Adult: eruption of 3rd molars (17–21 and onward)","Early permanent: 6–12 years; Adult: 12–15 years","Early permanent: 9–10 years; Adult: 14–15 years","Both start at age 18"],a:0,expl:'Early permanent: 12 years+; Adult: 3rd molars at 17–21 and onward (p.18).'},
+{q:'In the newborn mouth, the basal bone is covered by a firm, rounded fibrous band called the:',opts:["Alveolar crest","Palatal rugae","Gum pad","Dental lamina"],a:2,expl:'Basal bone is covered by a firm rounded fibrous band called the gum pad (p.18).'},
+{q:'The maxillary gum pad is ______ in shape with a shallow vault, whereas the lower gum pad is ______ in shape:',opts:["Ovoid; triangular","U-shaped; horse-shoe shaped","Square; V-shaped","Horse-shoe shaped; U-shaped"],a:3,expl:'Maxillary pad is horse-shoe shaped; lower pad is U-shaped (p.18).'},
+{q:'The groove separating the maxillary gum pad from the hard palate is called the:',opts:["Lateral sulcus","Transverse groove","Gingival groove (or dental groove)","Median palatine raphe"],a:2,expl:'Gingival groove (or dental groove) separates pad from hard palate (p.18).'},
+{q:'The alveolar part of each gum pad is divided by transverse grooves into how many segments?',opts:["8 segments","10 segments (mandibular less defined than maxillary)","12 segments","6 segments"],a:1,expl:'Divided into 10 segments by transverse grooves; mandibular are less defined (p.18).'},
+{q:'Grooves present in gum pads distal to the canine segment that act as an antero-posterior landmark are called:',opts:["Gingival grooves","Dental grooves","Vestibular sulci","Lateral sulci"],a:3,expl:'Lateral sulcus continues buccally distal to the canine segment (p.18).'},
+{q:'"Cephalocaudal gradient of growth" means:',opts:["An increased rate of growth extending from head to feet","Feet grow slower than the head","Maxilla grows faster than mandible at puberty","Brain grows slowest after birth"],a:0,expl:'Increased rate of growth extending from head to feet (p.19).'},
+{q:'In a newborn child, we generally observe:',opts:["Maxillary protrusion","Maxillary retrusion","Mandibular protrusion","Mandibular retrusion (backward position of mandible)"],a:3,expl:'Mandible is in a backward position (mandibular retrusion) at birth (p.19).'},
+{q:'When upper and lower gum pads are approximated, the maxillary lateral sulcus is ______ to the mandibular one:',opts:["Distal","Mesial","Directly in line with","Lingual"],a:1,expl:'Maxillary lateral sulcus is mesial to the mandibular one due to backward mandible (p.19).'},
+{q:'When both gum pads are approximated, where do they make contact while leaving an anterior vertical gap?',opts:["At the 1st molar (D) region","At the central incisor region","At the canine region","Along the entire arch"],a:0,expl:'Rarely contact anteriorly; they touch at the 1st molar (D) region (p.19).'},
+{q:'Why does a vertical anterior gap normally exist between the gum pads in newborns?',opts:["To allow permanent molar eruption","To induce open bite","To prevent breastfeeding","To allow deciduous tooth eruption without impinging and express breast milk without hurting nipples"],a:3,expl:'Vertical gap allows tooth eruption without impinging and breastfeeding without hurting nipples (p.19).'},
+{q:'How does the anterior gap between gum pads decrease over time?',opts:["Attrition of the gum pads","Growth of the alveolar process and eruption of deciduous incisors","Shrinkage of the tongue","Backward displacement of the maxilla"],a:1,expl:'Anterior gap decreases due to alveolar growth and deciduous incisor eruption (p.19).'},
+{q:'In the physiologic rest position of the newborn mandible, the tongue lies behind the lower lip because the upper lip is short and flaccid. This characterizes:',opts:["Adult swallowing","Neutral zone molding","Infantile type of swallowing","Traumatic occlusion"],a:2,expl:'Tongue projecting between pads behind lower lip = infantile type of swallowing (p.19).'},
+{q:'What malocclusion results if the infantile tongue posture between the pads persists after eruption of teeth?',opts:["Open bite","Deep overbite","Anterior crossbite","Posterior crossbite"],a:0,expl:'Persistence after tooth eruption causes open bite (p.19).'},
+{q:'Where should the tongue rest after eruption of the deciduous teeth?',opts:["Between the upper and lower incisors","Behind the lower lip","In the oral cavity proper","Below the lingual frenum only"],a:2,expl:'Tongue should rest in the oral cavity proper after deciduous eruption (p.19).'},
+{q:'Why are developing incisors crowded in their crypts early in the 1st year, and how do they align later?',opts:["Pads are too wide; tongue retracts","Symphysis fuses at birth","Attrition creates space","Pads are initially too narrow; rapid lateral growth later in 1st year aligns incisors in the Neutral zone (lips/cheeks vs tongue)"],a:3,expl:'Early gum pads are narrow; rapid lateral growth later in 1st year aligns incisors in the Neutral zone (p.19).'},
+{q:'Symphysis cartilage allows for lateral growth of the mandible, with NO lateral growth occurring after:',opts:["1 year","5 years","9 years","15 years"],a:2,expl:'N.B.: No lateral growth of the mandible after 9 years (p.19).'},
+{q:'Up to what age does the maxilla grow laterally in the median palatine raphe?',opts:["6–7 years","14–15 years","9 years","20–25 years"],a:1,expl:'Maxilla grows laterally in median palatine raphe up to 14–15 years (p.19).'},
+{q:'Which of the following statements about gum pads is FALSE?',opts:["Upper pad is wider than lower pad with considerable anterior overjet","Alveolar process is not developed yet at birth","Maxillary lateral sulcus is distal to mandibular one when approximated","Lower gum pad is limited lingually by a gingival groove"],a:2,expl:'Maxillary lateral sulcus is MESIAL (not distal) to mandibular one (p.19).'},
+{q:'The upper gum pad is horse-shoe shaped rather than ovoid.',opts:["True","False","Sometimes","Only in males"],a:0,expl:'Upper gum pad is horse-shoe shaped (p.18).'},
+{q:'Which structure is correctly matched with its landmark location?',opts:["Gingival groove — distal to canine segment","Transverse groove — separates hard palate from gum pad","Lateral sulcus — distal to canine segment, AP landmark","Median palatine raphe — mandibular midline"],a:2,expl:'Lateral sulcus is distal to the canine segment and acts as an AP landmark (p.18).'}
+]},
+/* ===== CHAPTER 8 ===== */
+{id:8,title:"Deciduous Dentition Stage",theme:{bg:"linear-gradient(135deg,#7c3e1a,#4a2410)",accent:"#f97316"},questions:[
+{q:'Primary dental arches are mostly ______ in shape and display less variability than permanent ones:',opts:["V-shaped","Ovoid","Square","Tapering"],a:1,expl:'Primary arches are mostly ovoid in shape (p.20).'},
+{q:'Compared to permanent teeth, deciduous teeth are:',opts:["Darker and larger","More proclined and yellow","Whiter, smaller, and more upright","Wider in the anterior region"],a:2,expl:'Deciduous teeth are whiter, smaller, and more upright than successors (p.20).'},
+{q:'Spaces normally present in the deciduous dentition are considered:',opts:["Pathological","Physiological","Incisal liability","Crowding indicators"],a:1,expl:'Generalized interdental spacing and primate spaces are physiological (p.20).'},
+{q:'Primate spaces in the deciduous dentition are present:',opts:["Mesial to the maxillary canine and distal to the mandibular canine","Mesial to both canines","Distal to maxillary canine and mesial to mandibular canine","Distal to both canines"],a:0,expl:'Primate spaces: mesial to maxillary canine and distal to mandibular canine (p.20).'},
+{q:'How do the mandibular and maxillary primate spaces close?',opts:["Both close at age 2.5 years","Mandibular closes partially by eruption of 1st permanent molar; maxillary closes by eruption of maxillary permanent incisors","Both close by eruption of 2nd permanent molars","Maxillary closes by 1st permanent molar; mandibular closes by incisors"],a:1,expl:'Mandibular closes partially by 6s; maxillary closes by maxillary permanent incisors (p.20).'},
+{q:'Good contacts in primary teeth with absence/lack of spacing predicts:',opts:["Normal occlusion in permanent teeth","Anterior open bite","Spaced permanent dentition","Later crowding in permanent teeth"],a:3,expl:'Absence of spacing predicts later crowding in permanent teeth (p.20).'},
+{q:'Early in the deciduous dentition, incisors are vertical with minimal overbite of ______ and overjet of ______:',opts:["5 mm; 5 mm","1 mm; 4 mm","2.5 mm; 0–3 mm","0 mm; 6 mm"],a:2,expl:'Minimal overbite is 2.5 mm and overjet is 0–3 mm (p.20).'},
+{q:'At 3 years of age, why is there an excessive overbite in deciduous incisors, and how is it reduced?',opts:["Mandible stops growing; reduced by extractions","Upper incisors almost cover lower incisors; reduced over time by rapid attrition","Lower incisors over-erupt; reduced by tongue thrust","Maxilla rotates upward; reduced by primate spaces"],a:1,expl:'At 3 yrs excessive overbite occurs, later reduced by rapid attrition (p.20).'},
+{q:'At 6 years of age, what incisor relationship may develop to facilitate the early forward shift of the mandible?',opts:["Deep overbite","Anterior crossbite","Edge-to-edge incisor relationship","Severe open bite"],a:2,expl:'At 6 yrs an edge-to-edge relationship facilitates early forward mandibular shift (p.20).'},
+{q:'In primary dentition, the anatomic structure used to determine the molar relationship is the:',opts:["Distal plane of primary 2nd molar (E)","Mesial surface of primary 1st molar (D)","Distal plane of primary 1st molar (D)","Mesiobuccal cusp of primary 1st molar"],a:0,expl:'Terminal plane is formed by distal surfaces of primary 2nd molars (E) (p.20–21).'},
+{q:'Why does a flush terminal plane occur between upper and lower deciduous second molars (Es)?',opts:["Upper D > lower D and upper E > lower E","Lower D < upper D","Lower D equals upper D, while lower E is wider mesiodistally than upper E","Upper E is wider than lower E"],a:2,expl:'Lower D = upper D, while lower E is wider than upper E, producing flush terminal plane (p.20).'},
+{q:'If a flush terminal plane persists, how do the upper and lower 1st permanent molars (6s) initially meet?',opts:["Class I relation","Class II relation","Class III relation","End-to-end (end-on) relation"],a:3,expl:'Persistent flush terminal plane gives end-to-end 6s relation (p.21).'},
+{q:'Which terminal plane relationship is most favorable for E/E to guide 1st permanent molars directly into Class I?',opts:["Flush terminal plane","Mesial step","Distal step","Reverse plane"],a:1,expl:'Mesial step guides 1st permanent molars directly into Class I (p.21).'},
+{q:'"Early mesial shift" refers to:',opts:["Primary molars moving distally","Permanent premolars drifting mesially","Primary molars moving mesially to close the mandibular primate space (aided by cusp wear and forward mandibular growth)","Maxillary incisors flaring labially"],a:2,expl:'Early mesial shift closes primate space via cusp wear and mandibular forward growth (p.21).'},
+{q:'If spaces are absent in the deciduous dentition, the end-to-end relation of 1st permanent molars remains until:',opts:["Eruption of permanent incisors","Age 18","Eruption of maxillary canines","Shedding of the lower 2nd deciduous molar (E)"],a:3,expl:'Without spaces, end-to-end 6s wait until shedding of lower 2nd deciduous molar (E) (p.21).'},
+{q:'When does calcification of the deciduous teeth begin?',opts:["2nd month of intra-uterine life","Early in the 4th month of intra-uterine life (M.I.U.)","8th month of intra-uterine life","At birth"],a:1,expl:'Calcification begins early in the 4th M.I.U. (p.22).'},
+{q:'At birth, what fraction of the deciduous crowns have been calcified?',opts:["100%","None","3/4","1/4 to 1/2 (together with tips of 1st permanent molar cusps)"],a:3,expl:'At birth 1/4 to 1/2 of deciduous crowns + 1st permanent molar cusp tips are calcified (p.22).'},
+{q:'What are the eruption dates (in months) for maxillary and mandibular deciduous central incisors (A)?',opts:["Maxillary 8, Mandibular 6","Maxillary 6, Mandibular 8","Maxillary 9, Mandibular 7","Maxillary 12, Mandibular 10"],a:0,expl:'Central incisor (A): Maxillary 8 months, Mandibular 6 months (p.22).'},
+{q:'What are the eruption dates (in months) for maxillary and mandibular deciduous lateral incisors (B)?',opts:["Maxillary 8, Mandibular 6","Maxillary 9, Mandibular 7","Maxillary 14, Mandibular 12","Maxillary 18, Mandibular 16"],a:1,expl:'Lateral incisor (B): Maxillary 9 months, Mandibular 7 months (p.22).'},
+{q:'What are the eruption dates (in months) for deciduous 1st molars (D)?',opts:["Maxillary 18, Mandibular 16","Maxillary 24, Mandibular 20","Maxillary 14, Mandibular 12","Maxillary 9, Mandibular 7"],a:2,expl:'First deciduous molar (D): Maxillary 14 months, Mandibular 12 months (p.22).'},
+{q:'What are the eruption dates (in months) for deciduous canines (C)?',opts:["Maxillary 14, Mandibular 12","Maxillary 9, Mandibular 7","Maxillary 24, Mandibular 20","Maxillary 18, Mandibular 16"],a:3,expl:'Deciduous canine (C): Maxillary 18 months, Mandibular 16 months (p.22).'},
+{q:'Which deciduous tooth erupts last (Maxillary 24 months, Mandibular 20 months)?',opts:["C (Canine)","E (Second deciduous molar)","D (First deciduous molar)","B (Lateral incisor)"],a:1,expl:'Second deciduous molar (E) erupts at 24m (Max) and 20m (Mand) (p.22).'},
+{q:'Usually in the deciduous dentition stage, there is generalized spacing in the incisor region.',opts:["True","False","Only in males","Only after age 3"],a:0,expl:'Generalized interdental spacing is normally present in the primary incisor region (p.20).'},
+{q:'Which statement about primary posterior occlusion is TRUE?',opts:["Upper E is wider than lower E","Distal step gives Class I molar relation","Mesiobuccal cusp of maxillary molar occludes in distal fossa of mandibular molar","Mesiobuccal cusp of maxillary molar occludes in buccal groove of mandibular molar (mesial cusp of mandibular molar ahead of maxillary)"],a:3,expl:'Exact posterior deciduous occlusion description on page 20.'},
+{q:'In the terminal plane diagram, a "Distal step" of the deciduous second molars leads directly to:',opts:["Class I molar relation","Class II molar relation","End-on molar relation","Class III molar relation"],a:1,expl:'Diagram on page 21 shows Distal step → Class II molar relation.'},
+{q:'Which sequence accurately reflects the chronological eruption of deciduous teeth?',opts:["A → B → C → D → E","E → D → C → B → A","A → B → D → C → E","B → A → D → C → E"],a:2,expl:'Order: A (6/8m) → B (7/9m) → D (12/14m) → C (16/18m) → E (20/24m) (p.22).'},
+{q:'In the deciduous dentition, the maxillary arch is usually larger than the mandibular arch.',opts:["True","False","Only in males","Only in females"],a:0,expl:'Maxillary arch is usually larger than the mandibular one (p.20).'},
+{q:'Which factor does NOT contribute to transforming a flush terminal plane into a mesial step?',opts:["Wear of deciduous molar cusps and incisal edges","Closure of primate space distal to lower canine","Extraction of maxillary central incisors","Forward growth component of mandible exceeding maxilla"],a:2,expl:'Cusp wear, primate space closure, and mandibular forward growth create the mesial step (p.21).'},
+{q:'At birth, which permanent teeth already show calcified cusp tips?',opts:["Central incisors","Canines","Second molars","First permanent molars"],a:3,expl:'Tips of 1st permanent molar cusps are calcified at birth (p.22).'},
+{q:'Which pairing of deciduous tooth and mandibular eruption age is CORRECT?',opts:["D — 12 months","C — 18 months","E — 24 months","A — 8 months"],a:0,expl:'Mandibular D erupts at 12 months (C is 16m, E is 20m, A is 6m in mandible) (p.22).'}
+]},
+/* ===== CHAPTER 9 ===== */
+{id:9,title:"Permanent & Adult Occlusion",theme:{bg:"linear-gradient(135deg,#8b1a1a,#520f0f)",accent:"#dc2626"},questions:[
+{q:'Which developmental stage is considered the "most important stage" for the development of normal occlusion?',opts:["Gum pad stage","Deciduous dentition stage","Mixed dentition stage","Adult occlusion stage"],a:2,expl:'Mixed dentition stage is the most important stage for normal occlusion development (p.22).'},
+{q:'Permanent teeth do NOT begin eruptive movements until crown completion and what fraction of root formation?',opts:["1/4","1/2","2/3","Complete root formation"],a:1,expl:'Eruptive movement begins after crown completion and 1/2 root formation (p.22).'},
+{q:'Permanent teeth pierce the alveolar crest after what fraction of their roots are formed?',opts:["1/4","1/3","1/2","2/3"],a:3,expl:'Teeth pierce the alveolar crest after 2/3 of their roots are formed (p.22).'},
+{q:'What are the normal eruption ages (in years) for 1st permanent molars (6) and maxillary central incisors (1)?',opts:["6s: 5–5.5; Max 1: 6–6.5","6s: 7–7.5; Max 1: 8.5–9","6s: 6–6.5 (both); Max 1: 7–7.5 (Mand 1: 6–6.5)","6s: 8; Max 1: 9"],a:2,expl:'Exact table values on page 22 (6s: 6–6.5; Max 1: 7–7.5; Mand 1: 6–6.5).'},
+{q:'The last primary tooth to be replaced by a permanent tooth (erupting at 12–12.5 years) is the:',opts:["Mandibular canine","Maxillary first molar","Mandibular second molar","Maxillary canine"],a:3,expl:'Maxillary canine erupts at 12–12.5 yrs (vs mand canine 10–10.5, 4 at 10.5–11, 5 at 11.5–12) (p.22).'},
+{q:'What are the eruption ages (in years) for permanent premolars (4 and 5) and 2nd molars (7)?',opts:["4: 10.5–11; 5: 11.5–12; 7: 12.5 (same in both arches)","4: 8.5–9; 5: 10; 7: 14","4: 12; 5: 13; 7: 15","4: 9; 5: 10.5; 7: 11.5"],a:0,expl:'Exact eruption ages for 4, 5, and 7 in both arches (p.22).'},
+{q:'Difference in eruption dates between right and left sides should NOT exceed:',opts:["2 months","6 months","12 months","18 months"],a:1,expl:'Right vs left eruption difference should not exceed 6 months (p.22).'},
+{q:'What is the normal direction of eruption of permanent teeth?',opts:["Apical, distal, and lingual","Occlusal, distal, and palatal","Occlusal, mesial, and buccal","Gingival, mesial, and lingual"],a:2,expl:'Direction of eruption is occlusal, mesial, and buccal (p.22).'},
+{q:'If maxillary deciduous incisors are retained while permanent incisors erupt lingually, what happens if they are not extracted?',opts:["Median diastema","Anterior crossbite will develop","Tongue automatically pushes them labially","Deep overbite corrects"],a:1,expl:'Retained upper deciduous incisors must be extracted or crossbite will develop (lower is corrected by tongue) (p.23).'},
+{q:'An upper permanent incisor erupting in crossbite can be corrected by biting on an ice-cream stick lingually ONLY if done:',opts:["After complete eruption","After 3rd molar eruption","In adulthood","Before complete eruption"],a:3,expl:'Ice-cream stick biting must be done before complete eruption (p.23).'},
+{q:'Which three growth mechanisms accommodate the greater size of permanent incisors?',opts:["Primate space opening, lingual tipping, arch constriction","Normal deciduous incisor spaces, increase in intercanine width, and more proclined permanent incisors","Leeway space, ramus resorption, molar distalization","Condylar growth, attrition, deep bite"],a:1,expl:'Exact 3 mechanisms listed on page 23.'},
+{q:'Before calcification begins, permanent premolars migrate from their lingual position to lie:',opts:["Buccal to deciduous canines","Near the orbital floor","Between the roots of the deciduous molars","Distal to 1st permanent molars"],a:2,expl:'Premolars migrate early to lie between the roots of deciduous molars (p.23).'},
+{q:'The Leeway space in the mandible and maxilla per side is:',opts:["0.9 mm in mandible; 1.7 mm in maxilla","2.5 mm in mandible; 1.5 mm in maxilla","Equal (1.7 mm) in both","1.7 mm per side in mandible; 0.9 mm per side in maxilla"],a:3,expl:'Mandible = 1.7 mm/side; Maxilla = 0.9 mm/side (p.23).'},
+{q:'Leeway space helps in the development of normal occlusion by:',opts:["Allowing late mesial shift of mandibular molars (and distal movement of larger permanent canine, especially in maxilla)","Providing space for 3rd molars only","Widening the cranial base","Proclining deciduous incisors"],a:0,expl:'Utilized by distal movement of larger canine (esp maxilla) and late mesial shift of mandibular molars (p.23).'},
+{q:'What is the Ugly Duckling stage?',opts:["A permanent pathological diastema requiring surgery","A temporary clinical picture (at 9–10 yrs) where erupting maxillary canines wedge against lateral roots, causing median diastema and disto-labial flaring of laterals","Crowding at 16–17 years","Lingual eruption of lower incisors"],a:1,expl:'Ugly duckling stage (9–10 yrs): canines near orbital floor wedge lateral roots mesially, flaring crowns distally (p.23).'},
+{q:'In children, the median diastema of the Ugly duckling stage closes spontaneously with the eruption of:',opts:["Maxillary permanent central incisors","Maxillary permanent first premolars","Maxillary permanent canines","Maxillary second molars"],a:2,expl:'Improves/closes as permanent canines continue to erupt and exert mesial wedging on crowns (p.23).'},
+{q:'Which of the following is a self-correcting anomaly?',opts:["Deep bite","Skeletal Class III","Posterior crossbite","Ugly Duckling stage"],a:3,expl:'Ugly duckling stage is temporary and self-correcting (p.23).'},
+{q:'In Early permanent dentition (12–13 years), initial lip fullness and incisor proclination due to a large tongue resolve when:',opts:["Jaws catch up in growth and the tongue brings incisor apices forward, uprighting the incisors","Wisdom teeth are extracted","Premolars erupt lingually","Overbite deepens to 100%"],a:0,expl:'Jaws catch up with tongue; tongue brings apices forward, uprighting incisors and decreasing lip convexity (p.24).'},
+{q:'Mandibular anterior crowding occurring around 16–17 years (late teen crowding) is mainly a result of:',opts:["Maxillary tooth size excess","Trauma","Late mandibular growth (plus partially 3rd molars and mesial drift)","Early loss of deciduous incisors"],a:2,expl:'Mainly due to mandibular growth, partially 3rd molars and mesial drift tendency (p.24).'},
+{q:'If overjet and overbite are normal, late teen crowding must still be aggressively treated.',opts:["True","False","Only in males","Only if severe"],a:1,expl:'If OJ and OB are normal, late teen crowding does NOT have to be treated (p.24).'},
+{q:'In Stage 5 (Adult occlusion), what closes residual spaces, and what occurs if occlusal wear exceeds compensatory eruption?',opts:["Lip pressure; facial height increases","3rd molar extraction; overjet triples","Forward component of force closes spaces; vertical facial height decreases","Tongue thrust; facial height remains unchanged"],a:2,expl:'Forward component of force closes residual spaces; if wear > eruption, vertical facial height decreases (p.24).'},
+{q:'Between ages 3–14 years, maxillary intercanine width increases by ______ and bimolar width increases by ______:',opts:["1–2 mm; 5–6 mm","0.9 mm; 1.7 mm","6–8 mm; 4–5 mm","3–5 mm; 2–3 mm"],a:3,expl:'Maxillary intercanine +3–5 mm; bimolar +2–3 mm (3–14 yrs) (p.24).'},
+{q:'Arch length is defined as the length of a line drawn from the mesial contact point of central incisors to:',opts:["The distal surface of second molars","A line joining the mesial contact points of 1st permanent molars","The canine cusp tips","The incisive papilla"],a:1,expl:'Arch length: mesial contact of central incisors to line joining mesial contacts of 1st permanent molars (p.25).'},
+{q:'The line of occlusion in the maxilla:',opts:["Passes over the contact points of posterior teeth and cingulae of anterior teeth","Passes over the buccal cusp tips of posterior teeth and incisal edges of incisors","Passes over the contact points of posterior teeth and incisal edges of incisors","Passes over the buccal cusp tips of molars and cingulae of incisors"],a:0,expl:'Maxillary line of occlusion: contact points of posterior teeth & cingulae of anterior teeth (p.25).'},
+{q:'In the mandible, the line of occlusion passes over:',opts:["Contact points of posterior teeth and cingulae of incisors","Lingual cusp tips and gingival margins","Buccal cusp tips of molars and incisal edges of incisors","Central fossae only"],a:2,expl:'Mandibular line of occlusion: buccal cusp tips of molars & incisal edges of incisors (p.25).'},
+{q:'How do arch length and perimeter change in the MAXILLA during mixed dentition?',opts:["Decrease from 6–10 years, then increase","Increase between 6–10 years (for larger permanent incisors), then decrease when premolars replace deciduous molars","Remain completely static","Double after age 12"],a:1,expl:'Increases 6–10 yrs, then decreases as smaller premolars replace deciduous molars (p.25).'},
+{q:'After mixed dentition / age 10, the mandibular arch length from first molar to first molar:',opts:["Increases markedly","Doubles","Remains identical","Decreases noticeably"],a:3,expl:'Mandibular arch length and perimeter show no increase and a noticeable decrease after age 10 (p.25).'},
+{q:'Which mechanism is NOT a cause of decreased mandibular arch length after age 10?',opts:["Late mesial shift of lower molars","Interproximal wear and lingual tipping of lower incisors","Labial proclination of maxillary incisors","Mesial shift tendency of all teeth"],a:2,expl:'Labial proclination of maxillary incisors is NOT a cause of mandibular decrease; the other 3 are listed on page 25.'},
+{q:'Permanent anterior teeth germs are formed lingual to their predecessors.',opts:["True","False","Only in maxilla","Only in mandible"],a:0,expl:'Germs of all permanent teeth are formed lingual to their predecessors (p.23).'},
+{q:'Calcification of ALL permanent teeth begins before birth.',opts:["True","False","Only incisors","Only molars"],a:1,expl:'Calcification of permanent teeth begins AFTER birth except the cusps of the 1st permanent molars (p.22).'}
+]},
+/* ===== CHAPTER 10 ===== */
+{id:10,title:"Andrews' Six Keys",theme:{bg:"linear-gradient(135deg,#2d1b5e,#1a0f3d)",accent:"#8b5cf6"},questions:[
+{q:'Who studied dental casts in 1972 to formulate the 6 keys of normal static occlusion in adults?',opts:["Edward Angle","Melvin Moss","Richard Scammon","Larry Andrews"],a:3,expl:'Larry Andrews (1972) identified the 6 keys of normal static occlusion (p.26).'},
+{q:'How many dental casts of individuals with straight teeth, correct bites, and no previous orthodontic treatment did Andrews study?',opts:["60 dental casts","120 dental casts","200 dental casts","50 dental casts"],a:1,expl:'Andrews studied 120 dental casts with no previous orthodontic treatment (p.26).'},
+{q:'In Key I (Molar relationship), the maxillary first permanent molar displays a solid ______ contact with opposing teeth:',opts:["One-point","Two-point","Three-point","Four-point"],a:2,expl:'Maxillary 1st permanent molar displays a solid three-point contact (p.26).'},
+{q:'Which of the following describes the contact of the DISTAL surface of the distal marginal ridge of the maxillary 1st permanent molar in Key I?',opts:["Contacts the distal surface of the mandibular 1st molar","Has no opposing contact","Contacts the mandibular 1st premolar","Contacts and occludes with the mesial surface of the mesial marginal ridge of the mandibular 2nd permanent molar"],a:3,expl:'Distal surface of its distal marginal ridge contacts mesial surface of mesial marginal ridge of mandibular 2nd molar (p.26).'},
+{q:'In normal occlusion (Key I), the mesiobuccal cusp of the maxillary first permanent molar occludes in the:',opts:["Central fossa of the mandibular first molar","Buccal groove located between the mesial and middle cusps of the mandibular first permanent molar","Marginal ridges of mandibular second premolar and first molar","Distal fossa of the mandibular second premolar"],a:1,expl:'Mesiobuccal cusp falls in the buccal groove between mesial and middle cusps of mandibular 1st molar (p.26).'},
+{q:'The mesiolingual cusp of the maxillary first permanent molar occludes with which part of the mandibular first molar?',opts:["Mesial marginal ridge","Buccal groove","Lingual groove","Central fossa"],a:3,expl:'Mesiolingual cusp is seated in the central fossa of the mandibular 1st molar (p.26).'},
+{q:'In Key I, molars and premolars enjoy a ______ relationship buccally, and a ______ relationship lingually:',opts:["Cusp-embrasure; cusp-fossa","Cusp-fossa; cusp-embrasure","Cusp-to-cusp; cusp-embrasure","Cusp-fossa; cusp-fossa"],a:0,expl:'Cusp-embrasure buccally, and cusp-fossa lingually (p.26).'},
+{q:'Consistent with the canine-rise concept in Key I, the tip of the maxillary canine is located:',opts:["Distal to the mandibular first premolar","Slightly mesial to the mandibular canine-premolar embrasure","Directly in the central fossa of the 1st premolar","Lingual to the mandibular canine"],a:1,expl:'Maxillary canine tip is slightly mesial to the mandibular canine-premolar embrasure (p.26).'},
+{q:'Crown angulation (Key II) means:',opts:["Mesiodistal tip","Faciolingual torque","Buccolingual rotation","Curve of Spee"],a:0,expl:'Key II: Crown angulation = Mesiodistal tip (p.26).'},
+{q:'From which perspective is Crown angulation (Key II) measured relative to a perpendicular line from the occlusal plane?',opts:["Occlusal perspective","Proximal perspective","Facial perspective","Lingual perspective"],a:2,expl:'Angle between long axis of crown (as viewed from facial perspective) and perpendicular to occlusal plane (p.26).'},
+{q:'When is Crown angulation (Key II) considered POSITIVE?',opts:["When the gingival portion of the crown\'s long axis is distal to the occlusal portion","When the gingival portion is mesial to the occlusal portion","When the crown tilts lingually","When the angle equals zero"],a:0,expl:'Positive when gingival portion of long axis is distal to occlusal portion (p.26).'},
+{q:'In normal occlusion (Key II), crown angulation was:',opts:["Negative for all teeth","Positive only for maxillary incisors","Negative for molars and positive for canines","Positive for all teeth"],a:3,expl:'In normal occlusion, crown angulation was positive for all teeth (p.26).'},
+{q:'Key III of Andrews\' six keys is:',opts:["Molar relationship","Mesiodistal tip","Crown inclination (Facial torque)","Tight contact"],a:2,expl:'Key III is Crown inclination (Facial torque) (p.27).'},
+{q:'From which perspective is Crown inclination (Key III) viewed?',opts:["Facial perspective","Proximal perspective","Occlusal perspective","Panoramic view"],a:1,expl:'Angle between facial long axis of crown (viewed from proximal perspective) and perpendicular to occlusal plane (p.27).'},
+{q:'When is Crown inclination (Key III) considered POSITIVE?',opts:["When the gingival portion is labial to the incisal portion","When the gingival portion is mesial to the occlusal portion","When the crown is rotated","When the gingival portion of the crown\'s long axis is lingual to the incisal portion (buccal root torque)"],a:3,expl:'Positive when gingival portion is lingual to incisal portion (diagram also labels + Buccal Root Torque) (p.27).'},
+{q:'In normal occlusion (Key III), crown inclination was NEGATIVE for all teeth EXCEPT:',opts:["Maxillary central and lateral incisors","Mandibular central and lateral incisors","Maxillary canines and premolars","Mandibular molars"],a:0,expl:'Negative for all teeth EXCEPT maxillary central and lateral incisors (p.27).'},
+{q:'In the maxillary arch (Key III), lingual crown inclination was ______ for canines through second premolars, and ______ in maxillary molars:',opts:["Positive; negative","Progressively decreasing; absent","Similar; slightly more pronounced","Zero; positive"],a:2,expl:'Similar for maxillary canines through 2nd premolars, slightly more pronounced in maxillary molars (p.27).'},
+{q:'In the mandibular arch (Key III), how did lingual crown inclination change from canines through second molars?',opts:["Remained constant","Progressively increased","Progressively decreased","Became positive in molars"],a:1,expl:'Lingual crown inclination progressively increased from mandibular canines through mandibular 2nd molars (p.27).'},
+{q:'Key IV of Andrews\' six keys states that in normal occlusion, the dentition should be:',opts:["Rotated slightly in premolar areas","Rotated buccally at the 1st molars","Free from undesirable rotations","Spaced in the anterior segment"],a:2,expl:'Key IV: Dentition should be free from undesirable rotations (p.28).'},
+{q:'If a MOLAR is rotated, how much space does it occupy within the dental arch?',opts:["More space than normal","Less space than normal","The exact same space","No space change"],a:0,expl:'If the molar is rotated it occupies more space than normal within the dental arch (p.28).'},
+{q:'What happens to arch space if an ANTERIOR tooth is rotated?',opts:["It occupies more space than normal","It creates a deep curve of Spee","It occupies less space than normal (\"the reverse is true\")","It causes posterior crossbite"],a:2,expl:'Rotated molars take more space; "the reverse is true for the anterior teeth" (less space) (p.28).'},
+{q:'Key V of Andrews\' six keys of normal static occlusion specifies that:',opts:["Contact areas should have 1 mm spacing","Contact areas should be tight","Only molar contacts need to be tight","Anterior teeth should have open diastemas"],a:1,expl:'Key V: In normal occlusion, contact areas should be tight (p.28).'},
+{q:'Key VI of Andrews\' six keys evaluates the:',opts:["Midline symmetry","Canine-rise guidance","Arch perimeter","Occlusal plane (Curve of Spee)"],a:3,expl:'Key VI: Occlusal plane (Curve of Spee) (p.29).'},
+{q:'"An imaginary plane on which the teeth meet in occlusion" is the exact definition of:',opts:["The occlusal plane","The Frankfort plane","The line of Bolton","The primate plane"],a:0,expl:'Exact definition of the occlusal plane on page 29.'},
+{q:'In normal occlusion (Key VI), the occlusal plane (Curve of Spee) is:',opts:["Very deep (>4 mm)","Flat or semiflat","Steeply reversed","Discontinuous"],a:1,expl:'In normal occlusion, the occlusal plane is flat or semiflat (p.29).'},
+{q:'A deep curve of Spee results in:',opts:["More crowded arch (confined area for maxillary teeth)","More spaced arch","Open bite","Increased arch perimeter"],a:0,expl:'Deep curve of Spee → confined area for maxillary teeth → crowded arch (p.29).'},
+{q:'A reverse curve of Spee results in:',opts:["Confined area for maxillary teeth (crowded arch)","Complete deep overbite","Excessive room for the maxillary teeth (spaced arch)","Positive crown angulation"],a:2,expl:'Reverse curve of Spee → excessive room for maxillary teeth → spaced arch (p.29).'},
+{q:'In Andrews\' Key III diagram, negative crown inclination (lingual crown inclination) corresponds to:',opts:["Buccal root torque (+)","Buccal crown inclination","Mesial root tip","Lingual root torque (–)"],a:3,expl:'Key 3 diagram labels – Negative as "Lingual Root Torque" (p.27).'},
+{q:'In Key I, all three contact points of the maxillary 1st permanent molar are solely with the mandibular 1st permanent molar.',opts:["True","False","Sometimes","Only in Class II"],a:1,expl:'The distal marginal ridge of maxillary 6 contacts the mesial marginal ridge of mandibular 2nd molar (7) (p.26).'},
+{q:'Which pairing correctly matches Andrews\' Key with its defining feature?',opts:["Key II = Mesiodistal tip; Key III = Facial torque; Key V = Tight contact","Key II = Facial torque; Key III = Rotations; Key VI = Tight contact","Key I = Curve of Spee; Key IV = Tight contact; Key V = Molar relation","Key III = Mesiodistal tip; Key IV = Facial torque; Key VI = Rotations"],a:0,expl:'Key II = Mesiodistal tip, Key III = Facial torque, Key V = Tight contact (p.26–28).'}
+]}
+];
+
+/* Verify data integrity */
+console.log("Total chapters:", CHAPTERS.length);
+CHAPTERS.forEach(ch => console.log("Chapter", ch.id, ch.title, "- Questions:", ch.questions.length));
+
+const MOTIVATIONS = [
+  "🔥 You're on fire! Keep pushing!",
+  "💪 Every question is a step toward mastery",
+  "🎯 Precision matters — you're nailing it!",
+  "🧠 Your brain is building new pathways!",
+  "⭐ Excellence is a habit, not an act",
+  "🚀 Halfway to legendary status!",
+  "📚 Knowledge compounds — keep going!",
+  "🏆 Champions are made in practice",
+  "✨ You're sharper than you think!",
+  "🌟 One chapter closer to mastery!"
+];
+
+const STORAGE_KEY = "theBossOrtho_v2";
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { chapters: {}, currentChapter: null, currentQuestion: 0 };
+}
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+function getChapterState(id) {
+  if (!state.chapters[id]) {
+    state.chapters[id] = { currentQ: 0, answers: {}, wrongs: [], completed: false, score: null };
+  }
+  return state.chapters[id];
+}
+
+function renderHome() {
+  const grid = document.getElementById('chaptersGrid');
+  grid.innerHTML = '';
+  let totalCompleted = 0, totalCorrect = 0, totalAnswered = 0;
+
+  CHAPTERS.forEach((ch, idx) => {
+    const cs = getChapterState(ch.id);
+    const answered = Object.keys(cs.answers).length;
+    const correct = answered - cs.wrongs.length;
+    const pct = Math.round((answered / 30) * 100);
+    if (cs.completed) totalCompleted++;
+    totalCorrect += correct;
+    totalAnswered += answered;
+
+    const card = document.createElement('div');
+    card.className = 'chapter-card';
+    card.style.background = ch.theme.bg;
+    card.innerHTML = `
+      ${cs.completed ? '<div class="ch-done">✓ MASTERED</div>' : ''}
+      <div>
+        <div class="ch-num">Chapter ${String(idx+1).padStart(2,'0')}</div>
+        <div class="ch-title">${ch.title}</div>
+      </div>
+      <div class="ch-meta">
+        <div class="ch-progress"><div style="width:${pct}%"></div></div>
+        <div class="ch-badge">${answered}/30</div>
+      </div>
+    `;
+    card.onclick = () => startChapter(ch.id);
+    grid.appendChild(card);
+  });
+
+  document.getElementById('statChapters').textContent = `${totalCompleted}/10`;
+  document.getElementById('statAccuracy').textContent = totalAnswered > 0 ? Math.round((totalCorrect/totalAnswered)*100) + '%' : '—';
+  document.getElementById('statStreak').textContent = totalCompleted + ' 🔥';
+  document.getElementById('progressLabel').textContent = Math.round((totalAnswered/300)*100) + '% complete';
+}
+
+function startChapter(id) {
+  state.currentChapter = id;
+  const cs = getChapterState(id);
+  state.currentQuestion = cs.currentQ || 0;
+  saveState();
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function showScreen(which) {
+  document.getElementById('homeScreen').classList.toggle('hidden', which !== 'home');
+  document.getElementById('quizScreen').classList.toggle('active', which === 'quiz');
+  document.getElementById('resultScreen').classList.toggle('active', which === 'result');
+  document.getElementById('historyScreen').classList.toggle('active', which === 'history');
+  document.getElementById('bottomNav').style.display = which === 'quiz' ? 'flex' : 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQuestion() {
+  const ch = CHAPTERS.find(c => c.id === state.currentChapter);
+  if (!ch) return;
+  const cs = getChapterState(ch.id);
+  const qIdx = state.currentQuestion;
+  const q = ch.questions[qIdx];
+
+  document.getElementById('quizChapterTitle').textContent = ch.title;
+  document.getElementById('quizChapterSub').textContent = `Question ${qIdx+1} of 30`;
+
+  const answered = Object.keys(cs.answers).length;
+  const correct = answered - cs.wrongs.length;
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('wrongCount').textContent = cs.wrongs.length;
+  document.getElementById('remainCount').textContent = 30 - answered;
+  document.getElementById('progressFill').style.width = (answered/30*100) + '%';
+
+  const nav = document.getElementById('qNav');
+  nav.innerHTML = '';
+  for (let i = 0; i < 30; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'q-dot';
+    if (i === qIdx) dot.classList.add('current');
+    if (cs.answers[i] !== undefined) {
+      const isWrong = cs.wrongs.some(w => w.qIdx === i);
+      dot.classList.add(isWrong ? 'err' : 'ok');
+    }
+    dot.textContent = i + 1;
+    dot.onclick = () => { state.currentQuestion = i; cs.currentQ = i; saveState(); renderQuestion(); };
+    nav.appendChild(dot);
+  }
+  setTimeout(() => {
+    const cur = nav.querySelector('.q-dot.current');
+    if (cur) cur.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, 50);
+
+  document.getElementById('qNum').textContent = `Q${qIdx+1}`;
+  document.getElementById('qText').textContent = q.q;
+
+  const optsEl = document.getElementById('options');
+  optsEl.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.setAttribute('data-letter', letters[i]);
+    btn.textContent = opt;
+    const userAns = cs.answers[qIdx];
+    if (userAns !== undefined) {
+      btn.classList.add('disabled');
+      if (i === q.a) btn.classList.add('ok');
+      if (i === userAns && userAns !== q.a) btn.classList.add('err');
+    }
+    btn.onclick = () => selectAnswer(i);
+    optsEl.appendChild(btn);
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.classList.remove('show','ok-fb','err-fb');
+  if (cs.answers[qIdx] !== undefined) {
+    const isCorrect = cs.answers[qIdx] === q.a;
+    fb.classList.add('show', isCorrect ? 'ok-fb' : 'err-fb');
+    document.getElementById('fbEmoji').textContent = isCorrect ? '✓' : '✗';
+    document.getElementById('fbTitle').textContent = isCorrect ? 'Excellent!' : 'Not quite — learn from this';
+    document.getElementById('fbText').innerHTML = isCorrect
+      ? `<strong>Correct answer:</strong> ${letters[q.a]}. ${q.expl}`
+      : `<strong>Your answer:</strong> ${letters[cs.answers[qIdx]]}. <strong>Correct:</strong> ${letters[q.a]}. ${q.expl}`;
+  }
+
+  document.getElementById('prevBtn').disabled = qIdx === 0;
+  const nextBtn = document.getElementById('nextBtn');
+  const isLast = qIdx === 29;
+  const allAnswered = answered === 30;
+  if (isLast && allAnswered) {
+    nextBtn.innerHTML = 'Finish <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+    nextBtn.className = 'nav-btn finish';
+    nextBtn.onclick = finishChapter;
+  } else {
+    nextBtn.innerHTML = 'Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>';
+    nextBtn.className = 'nav-btn next';
+    nextBtn.onclick = nextQuestion;
+  }
+  nextBtn.disabled = cs.answers[qIdx] === undefined;
+
+  const card = document.getElementById('questionCard');
+  card.classList.remove('fade-in');
+  void card.offsetWidth;
+  card.classList.add('fade-in');
+}
+
+function selectAnswer(choice) {
+  const ch = CHAPTERS.find(c => c.id === state.currentChapter);
+  const cs = getChapterState(ch.id);
+  const qIdx = state.currentQuestion;
+  if (cs.answers[qIdx] !== undefined) return;
+
+  cs.answers[qIdx] = choice;
+  const q = ch.questions[qIdx];
+  if (choice !== q.a) {
+    cs.wrongs.push({ qIdx, userChoice: choice, correctIdx: q.a });
+  }
+  cs.currentQ = qIdx;
+  saveState();
+
+  const streak = checkRecentStreak(cs, ch);
+  if (streak > 0 && streak % 5 === 0 && choice === q.a) {
+    showMotivation();
+  }
+
+  renderQuestion();
+}
+
+function checkRecentStreak(cs, ch) {
+  let streak = 0;
+  const keys = Object.keys(cs.answers).map(Number).sort((a,b)=>a-b);
+  for (let i = keys.length - 1; i >= 0; i--) {
+    const q = ch.questions[keys[i]];
+    if (cs.answers[keys[i]] === q.a) streak++;
+    else break;
+  }
+  return streak;
+}
+
+function showMotivation() {
+  const el = document.getElementById('motivation');
+  el.textContent = MOTIVATIONS[Math.floor(Math.random()*MOTIVATIONS.length)];
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function nextQuestion() {
+  const ch = CHAPTERS.find(c => c.id === state.currentChapter);
+  const cs = getChapterState(ch.id);
+  if (cs.answers[state.currentQuestion] === undefined) return;
+  if (state.currentQuestion < 29) {
+    state.currentQuestion++;
+    cs.currentQ = state.currentQuestion;
+    saveState();
+    renderQuestion();
+  }
+}
+function prevQuestion() {
+  if (state.currentQuestion > 0) {
+    state.currentQuestion--;
+    const cs = getChapterState(state.currentChapter);
+    cs.currentQ = state.currentQuestion;
+    saveState();
+    renderQuestion();
+  }
+}
+
+function finishChapter() {
+  const ch = CHAPTERS.find(c => c.id === state.currentChapter);
+  const cs = getChapterState(ch.id);
+  if (Object.keys(cs.answers).length < 30) {
+    showModal('Complete All Questions', 'You need to answer all 30 questions before finishing the chapter.', () => {});
+    return;
+  }
+  cs.completed = true;
+  cs.score = { correct: 30 - cs.wrongs.length, wrong: cs.wrongs.length, total: 30 };
+  saveState();
+  showResult();
+}
+
+function showResult() {
+  const ch = CHAPTERS.find(c => c.id === state.currentChapter);
+  const cs = getChapterState(ch.id);
+  const pct = Math.round((cs.score.correct / 30) * 100);
+
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('rsCorrect').textContent = cs.score.correct;
+  document.getElementById('rsWrong').textContent = cs.score.wrong;
+  document.getElementById('rsTotal').textContent = `30/30`;
+
+  let icon, title, sub, iconClass;
+  if (pct >= 90) { icon = '🏆'; title = 'Outstanding!'; sub = 'You\'ve truly mastered this chapter'; iconClass = 'great'; }
+  else if (pct >= 70) { icon = '🎯'; title = 'Great Work!'; sub = 'Solid understanding — keep refining'; iconClass = 'good'; }
+  else if (pct >= 50) { icon = '💪'; title = 'Good Effort!'; sub = 'Review the wrong answers and try again'; iconClass = 'ok'; }
+  else { icon = '📚'; title = 'Keep Studying!'; sub = 'Every attempt builds mastery'; iconClass = 'ok'; }
+
+  document.getElementById('resultIcon').textContent = icon;
+  document.getElementById('resultIcon').className = 'result-icon ' + iconClass;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = sub;
+
+  const ring = document.getElementById('ringFg');
+  const circ = 2 * Math.PI * 70;
+  ring.setAttribute('stroke-dasharray', circ);
+  ring.setAttribute('stroke-dashoffset', circ);
+  setTimeout(() => {
+    ring.setAttribute('stroke-dashoffset', circ - (circ * pct / 100));
+  }, 100);
+
+  const wrongList = document.getElementById('resultWrongList');
+  const letters = ['A','B','C','D'];
+  if (cs.wrongs.length > 0) {
+    wrongList.innerHTML = `<div class="section-title" style="margin-top:20px"><h2>Review Mistakes</h2><small>${cs.wrongs.length} question${cs.wrongs.length>1?'s':''}</small></div>`;
+    cs.wrongs.forEach(w => {
+      const q = ch.questions[w.qIdx];
+      const item = document.createElement('div');
+      item.className = 'wrong-item';
+      item.innerHTML = `
+        <div class="wrong-q"><b>Q${w.qIdx+1}.</b> ${q.q}</div>
+        <div class="wrong-answers">
+          <div class="your">Your answer: ${letters[w.userChoice]} — ${q.opts[w.userChoice]}</div>
+          <div class="correct-ans">Correct: ${letters[w.correctIdx]} — ${q.opts[w.correctIdx]}</div>
+        </div>
+        <div class="wrong-expl">💡 ${q.expl}</div>
+      `;
+      wrongList.appendChild(item);
+    });
+  } else {
+    wrongList.innerHTML = `<div style="text-align:center;padding:20px;color:var(--ok);font-weight:600">🎉 Perfect score! No mistakes to review.</div>`;
+  }
+
+  showScreen('result');
+}
+
+function retryChapter() {
+  const id = state.currentChapter;
+  state.chapters[id] = { currentQ: 0, answers: {}, wrongs: [], completed: false, score: null };
+  state.currentQuestion = 0;
+  saveState();
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function showHistory() {
+  const content = document.getElementById('historyContent');
+  content.innerHTML = '';
+
+  const completed = CHAPTERS.filter(ch => getChapterState(ch.id).completed);
+  const inProgress = CHAPTERS.filter(ch => {
+    const cs = getChapterState(ch.id);
+    return !cs.completed && Object.keys(cs.answers).length > 0;
+  });
+
+  if (completed.length === 0 && inProgress.length === 0) {
+    content.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <h3 style="margin-bottom:6px;color:var(--text)">No history yet</h3>
+        <p>Start a chapter to see your progress here.</p>
+        <button class="btn-primary" style="margin-top:16px;padding:12px 24px;border-radius:10px;border:none;cursor:pointer;font-family:inherit;font-weight:600" onclick="goHome()">Browse Chapters</button>
+      </div>
+    `;
+    showScreen('history');
+    return;
+  }
+
+  if (completed.length > 0) {
+    const sec = document.createElement('div');
+    sec.innerHTML = `<div class="section-title"><h2>Completed Chapters</h2><small>${completed.length} of 10</small></div>`;
+    completed.forEach(ch => {
+      const cs = getChapterState(ch.id);
+      const pct = Math.round((cs.score.correct/30)*100);
+      let scoreClass = 'great';
+      if (pct < 90) scoreClass = 'good';
+      if (pct < 70) scoreClass = 'ok';
+      if (pct < 50) scoreClass = 'bad';
+
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `
+        <div class="history-head">
+          <div class="history-title">${ch.title}</div>
+          <div class="history-score ${scoreClass}">${cs.score.correct}/30 · ${pct}%</div>
+        </div>
+        <div class="history-meta">
+          <span>✓ ${cs.score.correct} correct</span>
+          <span>✗ ${cs.score.wrong} wrong</span>
+        </div>
+      `;
+      item.onclick = () => {
+        state.currentChapter = ch.id;
+        state.currentQuestion = 0;
+        saveState();
+        showResult();
+      };
+      sec.appendChild(item);
+    });
+    content.appendChild(sec);
+  }
+
+  if (inProgress.length > 0) {
+    const sec = document.createElement('div');
+    sec.style.marginTop = '24px';
+    sec.innerHTML = `<div class="section-title"><h2>In Progress</h2><small>${inProgress.length}</small></div>`;
+    inProgress.forEach(ch => {
+      const cs = getChapterState(ch.id);
+      const answered = Object.keys(cs.answers).length;
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `
+        <div class="history-head">
+          <div class="history-title">${ch.title}</div>
+          <div class="history-score good">${answered}/30</div>
+        </div>
+        <div class="history-meta">
+          <span>Currently on Q${(cs.currentQ||0)+1}</span>
+          <span>✓ ${answered - cs.wrongs.length} correct</span>
+          <span>✗ ${cs.wrongs.length} wrong</span>
+        </div>
+      `;
+      item.onclick = () => startChapter(ch.id);
+      sec.appendChild(item);
+    });
+    content.appendChild(sec);
+  }
+
+  const allWrongs = [];
+  CHAPTERS.forEach(ch => {
+    const cs = getChapterState(ch.id);
+    cs.wrongs.forEach(w => allWrongs.push({ ch, w }));
+  });
+  if (allWrongs.length > 0) {
+    const sec = document.createElement('div');
+    sec.style.marginTop = '24px';
+    sec.innerHTML = `<div class="section-title"><h2>All Mistakes (${allWrongs.length})</h2><small>Review & learn</small></div>`;
+    const letters = ['A','B','C','D'];
+    allWrongs.slice(0, 30).forEach(({ch, w}) => {
+      const q = ch.questions[w.qIdx];
+      const item = document.createElement('div');
+      item.className = 'wrong-item';
+      item.innerHTML = `
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">${ch.title} · Q${w.qIdx+1}</div>
+        <div class="wrong-q">${q.q}</div>
+        <div class="wrong-answers">
+          <div class="your">Your answer: ${letters[w.userChoice]} — ${q.opts[w.userChoice]}</div>
+          <div class="correct-ans">Correct: ${letters[w.correctIdx]} — ${q.opts[w.correctIdx]}</div>
+        </div>
+        <div class="wrong-expl">💡 ${q.expl}</div>
+      `;
+      sec.appendChild(item);
+    });
+    if (allWrongs.length > 30) {
+      const more = document.createElement('div');
+      more.style.cssText = 'text-align:center;padding:12px;color:var(--muted);font-size:13px';
+      more.textContent = `+ ${allWrongs.length - 30} more mistakes`;
+      sec.appendChild(more);
+    }
+    content.appendChild(sec);
+  }
+
+  showScreen('history');
+}
+
+function goHome() {
+  state.currentChapter = null;
+  saveState();
+  renderHome();
+  showScreen('home');
+}
+
+function confirmExit() {
+  showModal(
+    'Leave Chapter?',
+    'Your progress is saved automatically. You can return anytime to pick up where you left off.',
+    () => { goHome(); closeModal(); }
+  );
+}
+
+function showModal(title, text, onConfirm) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('modalConfirm').onclick = onConfirm;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+/* INIT */
+renderHome();
+if (state.currentChapter) {
+  const cs = getChapterState(state.currentChapter);
+  if (cs.completed) showResult();
+  else if (Object.keys(cs.answers).length > 0) { showScreen('quiz'); renderQuestion(); }
+  else showScreen('home');
+} else showScreen('home');
+
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('quizScreen').classList.contains('active')) {
+    if (e.key === 'ArrowRight') nextQuestion();
+    else if (e.key === 'ArrowLeft') prevQuestion();
+    else if (['1','2','3','4'].includes(e.key)) selectAnswer(parseInt(e.key)-1);
+  }
+});
+</script>
+</body>
+</html>
